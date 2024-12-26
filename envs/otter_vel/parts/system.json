@@ -1,0 +1,13 @@
+{
+    "Id": "id1",
+    "Name": "Otter",
+    "Params": "id1",
+    "Type": "Otter",
+    "Lib": "otter_lib",
+    "Dims": {
+        "input": -1.0,
+        "outout": -1.0
+    },
+    "LibVersion": 0.1,
+    "ParamsStructName": "Otter_params"
+}
