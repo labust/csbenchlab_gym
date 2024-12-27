@@ -1,0 +1,19 @@
+{
+    "Id": "30d39437-8a4c-4e55-82ea-56f6687726db",
+    "Name": "PID",
+    "IsComposable": 0.0,
+    "Components": [],
+    "Estimator": [],
+    "Disturbance": [],
+    "Params": "30d39437-8a4c-4e55-82ea-56f6687726db",
+    "ParamsStructName": "pid_params",
+    "Type": "PID",
+    "Lib": "local",
+    "Mux": {
+        "Inputs": 3.0,
+        "Outputs": 1.0
+    },
+    "RefHorizon": 1.0,
+    "RegenerateEnv": 0.0,
+    "LibVersion": 0.1
+}

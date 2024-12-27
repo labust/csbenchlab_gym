@@ -1,0 +1,13 @@
+{
+    "Id": "4f880e3b-8050-48ac-8323-b67ecf21e359",
+    "Name": "LinearSystem",
+    "Params": "4f880e3b-8050-48ac-8323-b67ecf21e359",
+    "Type": "LinearSystem",
+    "Lib": "csbenchlab",
+    "Dims": {
+        "input": -1.0,
+        "outout": -1.0
+    },
+    "LibVersion": "0.1",
+    "ParamsStructName": "CrazyFly_linearSystem"
+}
