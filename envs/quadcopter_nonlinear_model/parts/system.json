@@ -1,0 +1,13 @@
+{
+    "Id": "0a584f01-75a4-49d1-b786-b74d40b8c39f",
+    "Name": "quadcopter_nonlinear_model_height_wrapper",
+    "Params": "0a584f01-75a4-49d1-b786-b74d40b8c39f",
+    "Type": "quadcopter_nonlinear_model_height_wrapper",
+    "Lib": "local",
+    "Dims": {
+        "input": -1.0,
+        "outout": -1.0
+    },
+    "LibVersion": 0.1,
+    "ParamsStructName": "quadcopter_nonlinear_model_height_wrapper_params"
+}
