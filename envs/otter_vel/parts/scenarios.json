@@ -1,22 +1,46 @@
-{
-    "Id": "id2",
-    "Name": "Step accelerate",
-    "Ic": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
-    ],
-    "Reference": "two_steps",
-    "Params": "id2",
-    "ParamsStructName": "",
-    "ConstHorizonReference": 0.0
-}
+[
+    {
+        "Id": "id2",
+        "Name": "Step accelerate",
+        "Ic": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "Reference": "two_steps",
+        "Params": "id2",
+        "ParamsStructName": "",
+        "ConstHorizonReference": 0.0
+    },
+    {
+        "Id": "14154214-0a4d-4bf4-927f-54f82950ff98",
+        "Name": "Step with payload and gain",
+        "Ic": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "Reference": "two_steps",
+        "Params": "14154214-0a4d-4bf4-927f-54f82950ff98",
+        "ParamsStructName": "",
+        "ConstHorizonReference": 0.0
+    }
+]

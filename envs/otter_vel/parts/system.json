@@ -3,11 +3,23 @@
     "Name": "Otter",
     "Params": "id1",
     "Type": "Otter",
-    "Lib": "otter_lib",
+    "Lib": "data_driven_lib",
     "Dims": {
         "input": -1.0,
         "outout": -1.0
     },
     "LibVersion": 0.1,
-    "ParamsStructName": "Otter_params"
+    "ParamsStructName": "Otter_params",
+    "Disturbance": {
+        "Id": "a3e0548d-2f6a-4979-839e-3f70674d69d5",
+        "Name": "Gauss noise",
+        "Params": {
+            "mu": 0.0,
+            "sigma": 0.001
+        },
+        "ParamsStructName": "Gauss_params",
+        "Type": "Gauss",
+        "Lib": "csbenchlab",
+        "LibVersion": "0.1"
+    }
 }

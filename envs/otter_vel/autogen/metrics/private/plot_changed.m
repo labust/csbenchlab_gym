@@ -4,7 +4,10 @@ function plot_changed(out, plot_cfg, f_handle)
         set(0, 'CurrentFigure', f_handle);
         hold on;
     end
-
+    
+    if ~isfield(out.log, 'deepcTOl')
+        return
+    end
 
 
     changed = out.log.deepcTOl.log.db_active_idx.Data(1, :);

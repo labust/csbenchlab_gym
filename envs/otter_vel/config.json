@@ -2,5 +2,9 @@
     "Id": "id3",
     "Name": "otter_vel",
     "Version": "0.1",
-    "Ts": 0.05
+    "Ts": 0.05,
+    "Callbacks": {
+        "OnEnvLoad": "set_db_params"
+    },
+    "Extrinsic": true
 }

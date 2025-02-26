@@ -1,0 +1,33 @@
+{
+    "Id": "329d6e33-6895-476e-b751-ebe9e5dfd192",
+    "Name": "DeePC",
+    "IsComposable": 0.0,
+    "Components": {
+        "Id": "67f48915-d7c7-4b29-adb4-ef7d173f823b",
+        "Name": "",
+        "Params": [],
+        "ParamsStructName": "",
+        "Type": "",
+        "Lib": "",
+        "LibVersion": "",
+        "Mux": {
+            "Inputs": [],
+            "Outputs": []
+        },
+        "RefHorizon": 1.0,
+        "RegenerateEnv": 0.0
+    },
+    "Estimator": [],
+    "Disturbance": [],
+    "Params": "329d6e33-6895-476e-b751-ebe9e5dfd192",
+    "ParamsStructName": "ATDeePC_params",
+    "Type": "ATDeePC_wrap",
+    "Lib": "data_driven_lib",
+    "Mux": {
+        "Inputs": 1.0,
+        "Outputs": 1.0
+    },
+    "RefHorizon": 25.0,
+    "RegenerateEnv": 0.0,
+    "LibVersion": 0.1
+}

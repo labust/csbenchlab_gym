@@ -1,0 +1,41 @@
+{
+    "Id": "4520aafa-1230-490c-af80-fb3032dc6af6",
+    "Name": "PID_V",
+    "IsComposable": 0.0,
+    "Components": {
+        "Id": "91cc2d7f-7696-4ee9-bab4-0f0892b2d829",
+        "Name": "",
+        "Params": [],
+        "ParamsStructName": "",
+        "Type": "",
+        "Lib": "",
+        "LibVersion": "",
+        "Mux": {
+            "Inputs": [],
+            "Outputs": []
+        },
+        "RefHorizon": 1.0,
+        "RegenerateEnv": 0.0
+    },
+    "Estimator": {
+        "Id": "8bb865e8-c9a9-4c5e-b977-6151a44ed0e3",
+        "Name": "EKF",
+        "Params": {},
+        "ParamsStructName": "PropagateState_params",
+        "Type": "PropagateState",
+        "Lib": "csbenchlab",
+        "LibVersion": "0.1"
+    },
+    "Disturbance": [],
+    "Params": "4520aafa-1230-490c-af80-fb3032dc6af6",
+    "ParamsStructName": "pid_params_v",
+    "Type": "PID_V",
+    "Lib": "csbenchlab",
+    "Mux": {
+        "Inputs": 1.0,
+        "Outputs": 1.0
+    },
+    "RefHorizon": 1.0,
+    "RegenerateEnv": 0.0,
+    "LibVersion": "0.1"
+}

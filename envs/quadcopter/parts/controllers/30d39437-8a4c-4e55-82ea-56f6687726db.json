@@ -3,7 +3,7 @@
     "Name": "PID",
     "IsComposable": 0.0,
     "Components": {
-        "Id": "d329f15f-f3e9-46fd-a75d-ec2c70da8e1f",
+        "Id": "5fb70907-8901-46ae-a20e-d0639dd37251",
         "Name": "",
         "Params": [],
         "ParamsStructName": "",
@@ -17,8 +17,25 @@
         "RefHorizon": 1.0,
         "RegenerateEnv": 0.0
     },
-    "Estimator": [],
-    "Disturbance": [],
+    "Estimator": {
+        "Id": "3f64294e-1741-4b1b-80c1-4691a5577dd1",
+        "Name": "PropagateState",
+        "Params": {},
+        "ParamsStructName": "PropagateState_params",
+        "Type": "PropagateState",
+        "Lib": "csbenchlab",
+        "LibVersion": "",
+        "LibVerstion": "0.1"
+    },
+    "Disturbance": {
+        "Id": "d27a4810-6153-4508-8b29-2f710e52af81",
+        "Name": "ZeroNoise",
+        "Params": {},
+        "ParamsStructName": "ZeroNoise_params",
+        "Type": "ZeroNoise",
+        "Lib": "csbenchlab",
+        "LibVersion": "0.1"
+    },
     "Params": "30d39437-8a4c-4e55-82ea-56f6687726db",
     "ParamsStructName": "PID_params",
     "Type": "PID",
