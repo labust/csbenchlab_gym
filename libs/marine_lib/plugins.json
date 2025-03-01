@@ -1,0 +1,12 @@
+{
+    "library": "marine_lib",
+    "version": "0.0.1",
+    "description": "Put your descrition here",
+    "authors": ["Who are you"],
+    "plugins": [
+        {
+            "type": "file",
+            "path": "src/mss_wrappers.slx"
+        }
+    ]
+}

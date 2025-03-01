@@ -4,7 +4,10 @@
     "Version": "0.1",
     "Ts": 0.05,
     "Callbacks": {
-        "OnEnvLoad": "set_db_params"
+        "OnEnvLoad": "set_db_params",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
     },
     "Extrinsic": true
 }

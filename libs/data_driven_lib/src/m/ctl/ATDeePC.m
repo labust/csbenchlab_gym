@@ -48,9 +48,11 @@ classdef ATDeePC < Controller
         end
 
         function [this, u] = on_step(this, y_ref, y, dt, trajectory)
-
-         
             idx = this.data.idx;
+            this.data.yini = ...
+                DeePCHelpers.update_ini(y(1:this.data.vel_stop_idx), ...
+                this.data.yini, idx.p);
+         
             this.data.b(idx.uini_v.r) = this.data.uini;
             this.data.b(idx.yini_v.r) = this.data.yini;
          
@@ -91,9 +93,9 @@ classdef ATDeePC < Controller
             end
             this.data.fval = fval_new;
 
-            [this.data.uini, this.data.yini] = ...
-                DeePCHelpers.update_ini(u, y(1:this.data.vel_stop_idx), ...
-                this.data.uini, this.data.yini, idx.m, idx.p);
+            this.data.uini = ...
+                DeePCHelpers.update_ini(u, ...
+                this.data.uini, idx.m);
 
             this.data.x_op_u = this.data.x_op(idx.u.r);
             this.data.x_op_y = this.data.x_op(idx.y.r);

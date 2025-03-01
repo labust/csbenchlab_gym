@@ -3,19 +3,25 @@
     "Name": "DeePC",
     "IsComposable": 0.0,
     "Components": {
-        "Id": "67f48915-d7c7-4b29-adb4-ef7d173f823b",
-        "Name": "",
-        "Params": [],
-        "ParamsStructName": "",
-        "Type": "",
-        "Lib": "",
-        "LibVersion": "",
         "Mux": {
             "Inputs": [],
             "Outputs": []
         },
         "RefHorizon": 1.0,
-        "RegenerateEnv": 0.0
+        "RegenerateEnv": 0.0,
+        "Id": "debb7737-586f-4db4-9d78-4309bc246df3",
+        "Name": "",
+        "Params": [],
+        "ParamsStructName": "",
+        "Type": "",
+        "Lib": "",
+        "LibVersion": "0.0",
+        "Callbacks": {
+            "OnEnvLoad": "",
+            "OnEnvSave": "",
+            "OnStart": "",
+            "OnStop": ""
+        }
     },
     "Estimator": [],
     "Disturbance": [],
@@ -29,5 +35,11 @@
     },
     "RefHorizon": 25.0,
     "RegenerateEnv": 0.0,
-    "LibVersion": 0.1
+    "LibVersion": 0.1,
+    "Callbacks": {
+        "OnEnvLoad": "set_db_params",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
 }

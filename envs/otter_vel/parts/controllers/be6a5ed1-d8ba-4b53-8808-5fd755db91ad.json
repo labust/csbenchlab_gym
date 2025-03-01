@@ -15,7 +15,13 @@
             "Outputs": []
         },
         "RefHorizon": 1.0,
-        "RegenerateEnv": 0.0
+        "RegenerateEnv": 0.0,
+        "Callbacks": {
+        "OnEnvLoad": "",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
     },
     "Estimator": [],
     "Disturbance": {
@@ -28,7 +34,13 @@
         "ParamsStructName": "Gauss_mpc_params",
         "Type": "Gauss",
         "Lib": "csbenchlab",
-        "LibVersion": "0.1"
+        "LibVersion": "0.1",
+        "Callbacks": {
+        "OnEnvLoad": "",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
     },
     "Params": "be6a5ed1-d8ba-4b53-8808-5fd755db91ad",
     "ParamsStructName": "MPC_params",
@@ -40,5 +52,11 @@
     },
     "RefHorizon": 25.0,
     "RegenerateEnv": 0.0,
-    "LibVersion": "0.1"
+    "LibVersion": "0.1",
+    "Callbacks": {
+        "OnEnvLoad": "",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
 }

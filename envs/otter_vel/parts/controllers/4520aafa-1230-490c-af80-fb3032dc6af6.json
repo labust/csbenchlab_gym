@@ -15,7 +15,13 @@
             "Outputs": []
         },
         "RefHorizon": 1.0,
-        "RegenerateEnv": 0.0
+        "RegenerateEnv": 0.0,
+        "Callbacks": {
+        "OnEnvLoad": "",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
     },
     "Estimator": {
         "Id": "8bb865e8-c9a9-4c5e-b977-6151a44ed0e3",
@@ -24,7 +30,14 @@
         "ParamsStructName": "PropagateState_params",
         "Type": "PropagateState",
         "Lib": "csbenchlab",
-        "LibVersion": "0.1"
+        "LibVersion": "0.1",
+        "Callbacks": {
+        "OnEnvLoad": "",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
+        
     },
     "Disturbance": [],
     "Params": "4520aafa-1230-490c-af80-fb3032dc6af6",
@@ -37,5 +50,11 @@
     },
     "RefHorizon": 1.0,
     "RegenerateEnv": 0.0,
-    "LibVersion": "0.1"
+    "LibVersion": "0.1",
+    "Callbacks": {
+        "OnEnvLoad": "",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
 }

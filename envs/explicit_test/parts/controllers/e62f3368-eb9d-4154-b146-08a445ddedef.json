@@ -1,0 +1,33 @@
+{
+    "Id": "e62f3368-eb9d-4154-b146-08a445ddedef",
+    "Name": "ExplicitDeePC",
+    "IsComposable": 0.0,
+    "Components": {
+        "Id": "56631d1a-43e5-46a0-9682-3741e457bafc",
+        "Name": "",
+        "Params": [],
+        "ParamsStructName": "",
+        "Type": "",
+        "Lib": "",
+        "LibVersion": "",
+        "Mux": {
+            "Inputs": [],
+            "Outputs": []
+        },
+        "RefHorizon": 1.0,
+        "RegenerateEnv": 0.0
+    },
+    "Estimator": [],
+    "Disturbance": [],
+    "Params": "e62f3368-eb9d-4154-b146-08a445ddedef",
+    "ParamsStructName": "explicit_params",
+    "Type": "ExplicitDeePC",
+    "Lib": "data_driven_lib",
+    "Mux": {
+        "Inputs": 1.0,
+        "Outputs": 1.0
+    },
+    "RefHorizon": 1.0,
+    "RegenerateEnv": 0.0,
+    "LibVersion": "0.0.1"
+}
