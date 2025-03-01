@@ -7,16 +7,19 @@ classdef ExplicitDeePC < Controller
                 ParamDescriptor("B", 1), ...
                 ParamDescriptor("C", 1), ...
                 ParamDescriptor("D", 1), ...
-                ParamDescriptor("Tini", 1) ...
+                ParamDescriptor("Tini", 1), ...
+                ParamDescriptor("is_incremental", 0), ...
+                ParamDescriptor("u_min", -inf), ...
+                ParamDescriptor("u_max", inf), ...
+                ParamDescriptor("base_variable_name", 0) ...
             );
-       
         log_description = { 
 
         };
     end
 
     properties
-        Polih
+        sol
         uu
     end
 
@@ -38,7 +41,9 @@ classdef ExplicitDeePC < Controller
         end
 
         function this = on_configure(this)
-            this.Polih = PolyUnion;
+
+            base_variable_name = char(this.params.base_variable_name);
+            this.sol = get_workspace_variable(base_variable_name);
             this.uu = 0;
         end
 
@@ -50,25 +55,30 @@ classdef ExplicitDeePC < Controller
             % xini = this.data.yini(end);
             % xini_end = this.data.O * xini + this.data.Cl * uini;
 
-            poly = evalin('base', 'sss');
-            du = poly.feval([xini;  this.uu; y_ref], 'primal', 'tiebreak', 'obj');
-            if isnan(du)
-                du = this.data.uini(end);
+
+            if this.params.is_incremental
+                optim_u = this.sol.feval([xini; this.uu; y_ref], 'primal', 'tiebreak', 'obj');
+            else
+                optim_u = this.sol.feval([xini; 0; 0; y_ref], 'primal', 'tiebreak', 'obj');
+            end
+
+            if isnan(optim_u)
+                optim_u = this.data.uini(end);
             end
             
-            u = this.uu + du;
-            if u > 500
-                u = 500;
-            elseif u < -300
-                u = -300;
+            if this.params.is_incremental
+                u = this.uu + optim_u;
+            else
+                u = optim_u;
             end
-
-            du = u - this.uu;
-
+            u = Utils.saturate(u, this.params.u_min, this.params.u_max);
+            if this.params.is_incremental
+                optim_u = u - this.uu;
+                this.uu = u;
+            end
+          
             this.data.uini = ...
-                DeePCHelpers.update_ini(du, this.data.uini, size(u, 1));
-
-            this.uu = u;
+                DeePCHelpers.update_ini(optim_u, this.data.uini, size(u, 1));
             
         end
 

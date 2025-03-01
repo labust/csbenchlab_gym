@@ -3,19 +3,25 @@
     "Name": "ExplicitDeePC",
     "IsComposable": 0.0,
     "Components": {
-        "Id": "c9f882be-a430-4f71-b49c-33325a2d2f9f",
-        "Name": "",
-        "Params": [],
-        "ParamsStructName": "",
-        "Type": "",
-        "Lib": "",
-        "LibVersion": "",
         "Mux": {
             "Inputs": [],
             "Outputs": []
         },
         "RefHorizon": 1.0,
-        "RegenerateEnv": 0.0
+        "RegenerateEnv": 0.0,
+        "Id": "c3af7a22-9e00-42e5-a16c-1bf564a413c5",
+        "Name": "",
+        "Params": [],
+        "ParamsStructName": "",
+        "Type": "",
+        "Lib": "",
+        "LibVersion": "0.0",
+        "Callbacks": {
+            "OnEnvLoad": "",
+            "OnEnvSave": "",
+            "OnStart": "",
+            "OnStop": ""
+        }
     },
     "Estimator": [],
     "Disturbance": [],
@@ -29,5 +35,11 @@
     },
     "RefHorizon": 1.0,
     "RegenerateEnv": 0.0,
-    "LibVersion": "0.0.1"
+    "LibVersion": "0.0.1",
+    "Callbacks": {
+        "OnEnvLoad": "load_explicit_solution2",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
 }
