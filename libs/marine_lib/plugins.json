@@ -6,7 +6,13 @@
     "plugins": [
         {
             "type": "file",
-            "path": "src/mss_wrappers.slx"
+            "path": "src/mss_wrappers.slx",
+            "name": "Otter"
+        },
+        {
+            "type": "file",
+            "path": "src/small_differential_catamaran.slx:catamaran6dof",
+            "name": "catamaran6dof"
         }
     ]
 }

@@ -1,6 +1,6 @@
 {
-    "Id": "93bb18e3-0dd6-4cc9-a7d7-adb51b1012f1",
-    "Name": "ExplicitDeePC",
+    "Id": "ba85c8d1-6668-4a6b-ae0f-6c55e0e87ac7",
+    "Name": "ExplicitDeePC0",
     "IsComposable": 0.0,
     "Components": {
         "Mux": {
@@ -9,7 +9,7 @@
         },
         "RefHorizon": 1.0,
         "RegenerateEnv": 0.0,
-        "Id": "c3af7a22-9e00-42e5-a16c-1bf564a413c5",
+        "Id": "7cf7e53f-3cc2-47b7-a344-bb5b4c3ea425",
         "Name": "",
         "Params": [],
         "ParamsStructName": "",
@@ -25,8 +25,8 @@
     },
     "Estimator": [],
     "Disturbance": [],
-    "Params": "93bb18e3-0dd6-4cc9-a7d7-adb51b1012f1",
-    "ParamsStructName": "explicit_params2",
+    "Params": "ba85c8d1-6668-4a6b-ae0f-6c55e0e87ac7",
+    "ParamsStructName": "explicit_params0",
     "Type": "ExplicitDeePC",
     "Lib": "data_driven_lib",
     "Mux": {
@@ -37,7 +37,7 @@
     "RegenerateEnv": 0.0,
     "LibVersion": "0.0.1",
     "Callbacks": {
-        "OnEnvLoad": "load_explicit_solution2",
+        "OnEnvLoad": "load_explicit_solution",
         "OnEnvSave": "",
         "OnStart": "",
         "OnStop": ""

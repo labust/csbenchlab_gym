@@ -1,0 +1,7 @@
+{
+    "Id": "4ce3ef24-99d2-4dea-ac00-05dfcff7d542",
+    "Name": "small_differential",
+    "Version": "0.1",
+    "Ts": 0.05,
+    "Extrinsic": true
+}

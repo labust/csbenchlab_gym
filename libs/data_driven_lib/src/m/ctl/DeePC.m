@@ -38,9 +38,16 @@ classdef DeePC < Controller
         function [this, u] = on_step(this, y_ref, y, dt)
          
             idx = this.data.idx;
+            this.data.yini = ...
+                DeePCHelpers.update_ini(y(1), this.data.yini, size(y, 1));
 
             this.data.b(idx.uini_v.r) = this.data.uini;
             this.data.b(idx.yini_v.r) = this.data.yini;
+
+            this.data.A = DeePCHelpers.update_data_matrix(idx, this.data.A, ...
+                this.params.D_u, this.params.D_y, ...
+                this.data.T, ...
+                this.data.m, this.data.p, this.params);
 
             % x_op = this.data.x_op;
 
@@ -69,16 +76,18 @@ classdef DeePC < Controller
             end
 
             this.data.fval = fval_new;
-
+            
+            % u = [this.data.fval; x_op_new(1); optim_exit_flag];
+            u = 0;
             if optim_exit_flag >= 0 
                 this.data.x_op = x_op_new; 
-                u = this.data.x_op(idx.u.b);
             else
-                u = zeros(1, 1);
+                u(:) = optim_exit_flag;
             end
-            
-            [this.data.uini, this.data.yini] = ...
-                DeePCHelpers.update_ini(u, y(1), this.data.uini, this.data.yini, size(u, 1), size(y, 1));
+            u(:) = this.data.x_op(idx.u.b);
+
+            this.data.uini = ...
+                DeePCHelpers.update_ini(u, this.data.uini, size(u, 1));
 
             this.data.x_op_u = x_op_new(idx.u.r);
             this.data.x_op_y = x_op_new(idx.y.r);
@@ -89,7 +98,6 @@ classdef DeePC < Controller
             this.data.uini = zeros(size(this.data.uini));
             this.data.yini = zeros(size(this.data.yini));
         end
-       
     end
 
     methods(Static)

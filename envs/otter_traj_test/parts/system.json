@@ -1,0 +1,37 @@
+{
+    "Id": "id1",
+    "Name": "Otter",
+    "Params": "id1",
+    "Type": "Otter",
+    "Lib": "marine_lib",
+    "Dims": {
+        "input": -1.0,
+        "outout": -1.0
+    },
+    "LibVersion": "0.0.1",
+    "ParamsStructName": "Otter_params_bkp",
+    "Disturbance": {
+        "Id": "a3e0548d-2f6a-4979-839e-3f70674d69d5",
+        "Name": "Gauss noise",
+        "Params": {
+            "mu": 0.0,
+            "sigma": 0.001
+        },
+        "ParamsStructName": "Gauss_params",
+        "Type": "Gauss",
+        "Lib": "csbenchlab",
+        "LibVersion": "0.1",
+        "Callbacks": {
+            "OnEnvLoad": "",
+            "OnEnvSave": "",
+            "OnStart": "",
+            "OnStop": ""
+        }
+    },
+    "Callbacks": {
+        "OnEnvLoad": "",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
+}

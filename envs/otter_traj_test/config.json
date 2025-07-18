@@ -1,0 +1,13 @@
+{
+    "Id": "id3",
+    "Name": "otter_traj_test",
+    "Version": "0.1",
+    "Ts": 0.05,
+    "Callbacks": {
+        "OnEnvLoad": "set_db_params",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    },
+    "Extrinsic": true
+}

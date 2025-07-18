@@ -1,0 +1,45 @@
+{
+    "IsComposable": 0.0,
+    "Components": {
+        "Mux": {
+            "Inputs": [],
+            "Outputs": []
+        },
+        "RefHorizon": 1.0,
+        "RegenerateEnv": 0.0,
+        "Id": "8aea3106-120b-4ee4-9010-510e960478ec",
+        "Name": "",
+        "Params": [],
+        "ParamsStructName": "",
+        "Type": "",
+        "Lib": "",
+        "LibVersion": "0.0",
+        "Callbacks": {
+            "OnEnvLoad": "",
+            "OnEnvSave": "",
+            "OnStart": "",
+            "OnStop": ""
+        }
+    },
+    "Estimator": [],
+    "Disturbance": [],
+    "Mux": {
+        "Inputs": [],
+        "Outputs": []
+    },
+    "RefHorizon": 1.0,
+    "RegenerateEnv": 0.0,
+    "Id": "fa4a67d4-d250-4d64-8c48-5def2137340c",
+    "Name": "Controller1",
+    "Params": "fa4a67d4-d250-4d64-8c48-5def2137340c",
+    "ParamsStructName": "Controller1_params",
+    "Type": "Controller1",
+    "Lib": "demo_lib",
+    "LibVersion": "0.0.1",
+    "Callbacks": {
+        "OnEnvLoad": "",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
+}

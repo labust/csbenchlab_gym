@@ -1,0 +1,20 @@
+{
+    "Disturbance": [],
+    "Dims": {
+        "Inputs": -1.0,
+        "Outputs": -1.0
+    },
+    "Id": "8d4bef33-c54d-46a0-9f00-985528ce15f1",
+    "Name": "small_differential",
+    "Params": "8d4bef33-c54d-46a0-9f00-985528ce15f1",
+    "ParamsStructName": "small_differential_params",
+    "Type": "small_differential",
+    "Lib": "marine_lib",
+    "LibVersion": "0.0.1",
+    "Callbacks": {
+        "OnEnvLoad": "",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
+}

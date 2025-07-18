@@ -1,0 +1,23 @@
+[
+    {
+        "Id": "5c4c28e3-8cca-44e0-9a3f-e02d0580b6c4",
+        "Name": "Output with reference",
+        "Callback": "out_with_ref",
+        "Params": "5c4c28e3-8cca-44e0-9a3f-e02d0580b6c4",
+        "ParamsStructName": "out_with_ref_params"
+    },
+    {
+        "Id": "7c0b2316-c620-4d30-a981-7fc422cc7a12",
+        "Name": "Output with reference inc",
+        "Callback": "out_with_ref",
+        "Params": "7c0b2316-c620-4d30-a981-7fc422cc7a12",
+        "ParamsStructName": "out_with_ref_params"
+    },
+    {
+        "Id": "95374b78-4a36-42dd-a35c-6a9ea488563e",
+        "Name": "Output with 5 step",
+        "Callback": "out_with_ref",
+        "Params": "95374b78-4a36-42dd-a35c-6a9ea488563e",
+        "ParamsStructName": "out_with_ref_params"
+    }
+]

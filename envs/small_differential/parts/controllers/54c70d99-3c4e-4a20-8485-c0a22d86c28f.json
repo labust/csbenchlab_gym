@@ -1,0 +1,45 @@
+{
+    "IsComposable": 0.0,
+    "Components": {
+        "Mux": {
+            "Inputs": [],
+            "Outputs": []
+        },
+        "RefHorizon": 1.0,
+        "RegenerateEnv": 0.0,
+        "Id": "60b2c816-e673-48f0-8a6c-e4b388b8294f",
+        "Name": "",
+        "Params": [],
+        "ParamsStructName": "",
+        "Type": "",
+        "Lib": "",
+        "LibVersion": "0.0",
+        "Callbacks": {
+            "OnEnvLoad": "",
+            "OnEnvSave": "",
+            "OnStart": "",
+            "OnStop": ""
+        }
+    },
+    "Estimator": [],
+    "Disturbance": [],
+    "Mux": {
+        "Inputs": 1.0,
+        "Outputs": 1.0
+    },
+    "RefHorizon": 1.0,
+    "RegenerateEnv": 0.0,
+    "Id": "54c70d99-3c4e-4a20-8485-c0a22d86c28f",
+    "Name": "DeePC",
+    "Params": "54c70d99-3c4e-4a20-8485-c0a22d86c28f",
+    "ParamsStructName": "deepc_params",
+    "Type": "DeePC",
+    "Lib": "data_driven_lib",
+    "LibVersion": "0.0.1",
+    "Callbacks": {
+        "OnEnvLoad": "",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
+}

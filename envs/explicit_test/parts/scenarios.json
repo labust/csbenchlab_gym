@@ -1,22 +1,46 @@
-{
-    "Id": "id2",
-    "Name": "Step accelerate",
-    "Ic": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
-    ],
-    "Reference": "two_steps",
-    "Params": "id2",
-    "ParamsStructName": "",
-    "ConstHorizonReference": 0.0
-}
+[
+    {
+        "Id": "id2",
+        "Name": "Step accelerate",
+        "Ic": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "Reference": "two_steps",
+        "Params": "id2",
+        "ParamsStructName": "",
+        "ConstHorizonReference": 0.0
+    },
+    {
+        "Id": "1c6f47dc-3da5-4fd5-8ab7-eb6e54d1622b",
+        "Name": "Five steps",
+        "Ic": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "Reference": "five_steps",
+        "Params": "1c6f47dc-3da5-4fd5-8ab7-eb6e54d1622b",
+        "ParamsStructName": "",
+        "ConstHorizonReference": 0.0
+    }
+]

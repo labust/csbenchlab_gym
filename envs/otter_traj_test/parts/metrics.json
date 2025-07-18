@@ -1,0 +1,16 @@
+[
+    {
+        "Id": "7380a24f-9205-4927-a112-2421cb842e8e",
+        "Name": "Common metrics",
+        "Callback": "plot_changed",
+        "Params": "7380a24f-9205-4927-a112-2421cb842e8e",
+        "ParamsStructName": "plot_changed_params"
+    },
+    {
+        "Id": "5c4c28e3-8cca-44e0-9a3f-e02d0580b6c4",
+        "Name": "Output with reference",
+        "Callback": "out_with_ref",
+        "Params": "5c4c28e3-8cca-44e0-9a3f-e02d0580b6c4",
+        "ParamsStructName": "out_with_ref_params"
+    }
+]

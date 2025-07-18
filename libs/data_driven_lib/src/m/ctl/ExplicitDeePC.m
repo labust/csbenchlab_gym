@@ -2,7 +2,7 @@ classdef ExplicitDeePC < Controller
     %ExplicitDeePC Implementation 
 
     properties (Constant)
-        param_description = ParamSet( ...
+        param_description = {
                 ParamDescriptor("A", 1), ...
                 ParamDescriptor("B", 1), ...
                 ParamDescriptor("C", 1), ...
@@ -12,7 +12,7 @@ classdef ExplicitDeePC < Controller
                 ParamDescriptor("u_min", -inf), ...
                 ParamDescriptor("u_max", inf), ...
                 ParamDescriptor("base_variable_name", 0) ...
-            );
+            };
         log_description = { 
 
         };
@@ -41,29 +41,33 @@ classdef ExplicitDeePC < Controller
         end
 
         function this = on_configure(this)
-
             base_variable_name = char(this.params.base_variable_name);
             this.sol = get_workspace_variable(base_variable_name);
             this.uu = 0;
         end
 
-        function [this, u] = on_step(this, y_ref, y, dt)
+        function [this, u] = on_step2(this, y_ref, y, dt, s)
+            this.sol = getArrayFromByteStream(s);
+            [this, u] = on_step(this, y_ref, y, dt);
+        end
 
+
+        function [this, u] = on_step(this, y_ref, y, dt)
+            
+            % y = Utils.saturate(y, -2.3, 2.3);
             this.data.yini = ...
                 DeePCHelpers.update_ini(y(1), this.data.yini, size(y, 1));
-            xini = this.data.O_pinv * (this.data.yini - this.data.Cl*this.data.uini);
-            % xini = this.data.yini(end);
-            % xini_end = this.data.O * xini + this.data.Cl * uini;
+            
 
+            optim_u = evaluate_explicit(this.sol, y_ref, this.uu, this.data, this.params);
 
-            if this.params.is_incremental
-                optim_u = this.sol.feval([xini; this.uu; y_ref], 'primal', 'tiebreak', 'obj');
-            else
-                optim_u = this.sol.feval([xini; 0; 0; y_ref], 'primal', 'tiebreak', 'obj');
-            end
 
             if isnan(optim_u)
-                optim_u = this.data.uini(end);
+                if this.params.is_incremental
+                    optim_u = 0;
+                else
+                    optim_u = this.data.uini(end);
+                end
             end
             
             if this.params.is_incremental
@@ -87,11 +91,6 @@ classdef ExplicitDeePC < Controller
             this.data.yini = zeros(size(this.data.yini));
         end
 
-
-        function eval(this, xini, y_ref)
-            
-        end
-        
     end
 
     methods (Static)

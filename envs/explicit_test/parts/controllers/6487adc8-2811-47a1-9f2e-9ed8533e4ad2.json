@@ -1,0 +1,45 @@
+{
+    "Id": "6487adc8-2811-47a1-9f2e-9ed8533e4ad2",
+    "Name": "ExplicitDeePC_inc",
+    "IsComposable": 0.0,
+    "Components": {
+        "Mux": {
+            "Inputs": [],
+            "Outputs": []
+        },
+        "RefHorizon": 1.0,
+        "RegenerateEnv": 0.0,
+        "Id": "7cf7e53f-3cc2-47b7-a344-bb5b4c3ea425",
+        "Name": "",
+        "Params": [],
+        "ParamsStructName": "",
+        "Type": "",
+        "Lib": "",
+        "LibVersion": "0.0",
+        "Callbacks": {
+            "OnEnvLoad": "",
+            "OnEnvSave": "",
+            "OnStart": "",
+            "OnStop": ""
+        }
+    },
+    "Estimator": [],
+    "Disturbance": [],
+    "Params": "6487adc8-2811-47a1-9f2e-9ed8533e4ad2",
+    "ParamsStructName": "explicit_params_inc",
+    "Type": "ExplicitDeePC",
+    "Lib": "data_driven_lib",
+    "Mux": {
+        "Inputs": 1.0,
+        "Outputs": 1.0
+    },
+    "RefHorizon": 1.0,
+    "RegenerateEnv": 0.0,
+    "LibVersion": "0.0.1",
+    "Callbacks": {
+        "OnEnvLoad": "load_explicit_solution",
+        "OnEnvSave": "",
+        "OnStart": "",
+        "OnStop": ""
+    }
+}

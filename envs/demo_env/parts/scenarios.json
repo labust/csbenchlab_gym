@@ -1,0 +1,12 @@
+{
+    "Id": "c63e64a1-0989-4ba2-8cce-a02097c1b989",
+    "Name": "New_scenario",
+    "Ic": [
+        0.0,
+        0.0
+    ],
+    "Reference": "Step",
+    "Params": "c63e64a1-0989-4ba2-8cce-a02097c1b989",
+    "ParamsStructName": "",
+    "ConstHorizonReference": 0.0
+}

@@ -1,0 +1,23 @@
+{
+    "library": "demo_lib",
+    "version": "0.0.1",
+    "description": "Demo library",
+    "authors": "Luka Mandic",
+    "plugins": [
+        {
+            "type": "file",
+            "path": "src/Controller1.m",
+            "name": "Controller1"
+        },
+        {
+            "type": "file",
+            "path": "src/Controller2.py",
+            "name": "Controller2"
+        },
+        {
+            "type": "file",
+            "path": "src/System.slx:demo_double_integrator",
+            "name": "demo_double_integrator"
+        }
+    ]
+}

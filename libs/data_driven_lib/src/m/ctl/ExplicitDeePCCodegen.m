@@ -1,22 +1,29 @@
-classdef ExplicitDeePC < Controller
-    %ExplicitDeePC Implementation 
+classdef ExplicitDeePCCodegen < Controller
 
     properties (Constant)
-        param_description = ParamSet( ...
+        param_description = {
                 ParamDescriptor("A", 1), ...
                 ParamDescriptor("B", 1), ...
                 ParamDescriptor("C", 1), ...
                 ParamDescriptor("D", 1), ...
-                ParamDescriptor("Tini", 1) ...
-            );
-       
+                ParamDescriptor("PH", 1), ...
+                ParamDescriptor("PHe", 1), ...
+                ParamDescriptor("F", 1), ...
+                ParamDescriptor("g", 1), ...
+                ParamDescriptor("PHidx", 1), ...
+                ParamDescriptor("Tini", 1), ...
+                ParamDescriptor("is_incremental", 0), ...
+                ParamDescriptor("u_min", -inf), ...
+                ParamDescriptor("u_max", inf), ...
+                ParamDescriptor("base_variable_name", 0) ...
+            };
         log_description = { 
 
         };
     end
 
     properties
-        Polih
+        sol
         uu
     end
 
@@ -33,44 +40,44 @@ classdef ExplicitDeePC < Controller
     
     methods
 
-        function this = ExplicitDeePC(varargin)
+        function this = ExplicitDeePCCodegen(varargin)
             this@Controller(varargin);  
         end
 
         function this = on_configure(this)
-            this.Polih = PolyUnion;
             this.uu = 0;
         end
 
         function [this, u] = on_step(this, y_ref, y, dt)
-
+            
             this.data.yini = ...
                 DeePCHelpers.update_ini(y(1), this.data.yini, size(y, 1));
-            xini = this.data.O_pinv * (this.data.yini - this.data.Cl * this.data.uini);
-            % xini = this.data.yini(end);
-            % xini_end = this.data.O * xini + this.data.Cl * uini;
-
             
 
-            poly = evalin('base', 'sss');
-            du = poly.feval([xini;  y_ref], 'primal', 'tiebreak', 'obj');
-            if isnan(du)
-                du = this.data.uini(end);
+            optim_u = evaluate_explicit_codegen(y_ref, this.uu, this.data, this.params);
+
+            if isnan(optim_u)
+                if this.params.is_incremental
+                    optim_u = 0;
+                else
+                    optim_u = this.data.uini(end);
+                end
             end
             
-            u = this.uu + du;
-            if u > 500
-                u = 500;
-            elseif u < -300
-                u = -300;
+            u = zeros(1, 1);
+            if this.params.is_incremental
+                u(:) = this.uu + optim_u;
+            else
+                u(:) = optim_u;
             end
-
-            du = u - this.uu;
-
+            u(:) = Utils.saturate(u(:), this.params.u_min, this.params.u_max);
+            if this.params.is_incremental
+                optim_u = u - this.uu;
+                this.uu = u(1);
+            end
+          
             this.data.uini = ...
-                DeePCHelpers.update_ini(du, this.data.uini, size(u, 1));
-
-            this.uu = u;
+                DeePCHelpers.update_ini(optim_u, this.data.uini, size(u, 1));
             
         end
 
@@ -79,11 +86,6 @@ classdef ExplicitDeePC < Controller
             this.data.yini = zeros(size(this.data.yini));
         end
 
-
-        function eval(this, xini, y_ref)
-            
-        end
-        
     end
 
     methods (Static)

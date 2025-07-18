@@ -1,0 +1,7 @@
+{
+    "Id": "5c4c28e3-8cca-44e0-9a3f-e02d0580b6c4",
+    "Name": "Output with reference inc",
+    "Callback": "out_with_ref",
+    "Params": "5c4c28e3-8cca-44e0-9a3f-e02d0580b6c4",
+    "ParamsStructName": "out_with_ref_params"
+}

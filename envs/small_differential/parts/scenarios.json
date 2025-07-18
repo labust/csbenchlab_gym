@@ -1,0 +1,46 @@
+[
+    {
+        "Id": "2c34939b-05d1-464b-adc0-cac8df967e62",
+        "Name": "New_scenario",
+        "Ic": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "Reference": "two_steps",
+        "Params": "2c34939b-05d1-464b-adc0-cac8df967e62",
+        "ParamsStructName": "",
+        "ConstHorizonReference": 0.0
+    },
+    {
+        "Id": "bc568d4f-8530-4baf-869a-9b09b9fd47c0",
+        "Name": "New_scenario_yaw",
+        "Ic": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "Reference": "yaw_two_steps",
+        "Params": "bc568d4f-8530-4baf-869a-9b09b9fd47c0",
+        "ParamsStructName": "_1745307744041",
+        "ConstHorizonReference": 0.0
+    }
+]

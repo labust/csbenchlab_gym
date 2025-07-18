@@ -3,5 +3,7 @@
     "Name": "explicit_test",
     "Version": "0.1",
     "Ts": 0.05,
-    "Extrinsic": true
+    "Extrinsic": true,
+    "Controllers": [
+    ]
 }
