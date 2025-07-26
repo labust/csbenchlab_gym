@@ -16,7 +16,7 @@
             0.0,
             0.0
         ],
-        "Reference": "two_steps",
+        "Reference": "Two steps",
         "Params": "id2",
         "ParamsStructName": "",
         "ConstHorizonReference": 0.0
@@ -38,7 +38,7 @@
             0.0,
             0.0
         ],
-        "Reference": "two_steps",
+        "Reference": "Two steps",
         "Params": "14154214-0a4d-4bf4-927f-54f82950ff98",
         "ParamsStructName": "",
         "ConstHorizonReference": 0.0
