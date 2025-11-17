@@ -1,0 +1,8 @@
+{
+    "Library": "test_lib_with_deps",
+    "plugins": [
+        
+        // list your plugins here as json objects
+	    // specify the type of each to eather 'folder_scan' or 'file'
+    ]
+}

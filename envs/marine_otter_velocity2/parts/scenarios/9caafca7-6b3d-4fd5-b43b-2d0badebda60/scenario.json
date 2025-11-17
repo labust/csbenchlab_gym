@@ -1,0 +1,16 @@
+{
+    "Id": "9caafca7-6b3d-4fd5-b43b-2d0badebda60",
+    "Name": "Five steps perturbed",
+    "Description": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 35.0,
+    "Subcomponents": [
+        "Disturbance"
+    ],
+    "Disturbance": {
+        "Id": "941af73e-12e7-42cf-853d-f79bb40068e7",
+        "ComponentType": "disturbance",
+        "DestinationPath": "disturbances"
+    }
+}

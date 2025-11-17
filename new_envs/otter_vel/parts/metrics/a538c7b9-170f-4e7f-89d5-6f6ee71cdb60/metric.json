@@ -1,0 +1,8 @@
+{
+    "Id": "a538c7b9-170f-4e7f-89d5-6f6ee71cdb60",
+    "Name": "New Metric",
+    "Description": "",
+    "ParamsFile": "",
+    "Callback": "",
+    "ComponentType": "metric"
+}

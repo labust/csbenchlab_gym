@@ -1,0 +1,24 @@
+{
+    "Id": "b11ccfb6-c361-4845-af31-0c9bdb83000b",
+    "Name": "ExplicitGlobal",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "data_driven_lib",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "ExplicitDeePC",
+    "IsComposable": false,
+    "RefHorizon": 1,
+    "Mux": {
+        "Inputs": 1,
+        "Outputs": 1
+    },
+    "Subcomponents": [
+        "Disturbance",
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "ComponentType": "controller",
+    "PluginImplementation": "mat",
+    "Subcontrollers": {}
+}

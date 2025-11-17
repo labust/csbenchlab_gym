@@ -1,0 +1,8 @@
+{
+    "Id": "82119953-a182-4538-a607-98bdea4b5a43",
+    "Name": "otter_vel",
+    "Version": "0.1",
+    "Ts": 0.05,
+    "ComponentType": "metadata",
+    "CoderExtrinsic": true
+}

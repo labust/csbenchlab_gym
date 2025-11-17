@@ -1,0 +1,11 @@
+{
+    "Id": "3c1563ea-58b7-4557-a2db-cbc7b33f71a3",
+    "Name": "New Scenario (copy)",
+    "Description": "",
+    "InitialCondition": "",
+    "Reference": "",
+    "ParamsFile": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 35.0
+}

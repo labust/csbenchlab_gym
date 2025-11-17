@@ -1,0 +1,11 @@
+{
+    "Id": "65576e1b-c335-442d-a66f-c0a831447138",
+    "Name": "New Scenario",
+    "Description": "",
+    "InitialCondition": "",
+    "Reference": "",
+    "ParamsFile": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 35.0
+}

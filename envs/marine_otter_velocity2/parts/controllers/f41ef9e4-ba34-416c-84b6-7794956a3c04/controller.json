@@ -1,0 +1,24 @@
+{
+    "Id": "f41ef9e4-ba34-416c-84b6-7794956a3c04",
+    "Name": "Explicit0",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "data_driven_lib",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "ExplicitDeePC",
+    "IsComposable": false,
+    "RefHorizon": 1,
+    "Mux": {
+        "Inputs": 1,
+        "Outputs": 1
+    },
+    "Subcomponents": [
+        "Disturbance",
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "ComponentType": "controller",
+    "PluginImplementation": "mat",
+    "Subcontrollers": {}
+}

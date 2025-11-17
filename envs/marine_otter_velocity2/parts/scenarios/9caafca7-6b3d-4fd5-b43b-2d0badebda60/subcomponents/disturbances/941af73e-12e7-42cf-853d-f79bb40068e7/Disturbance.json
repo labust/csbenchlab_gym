@@ -1,0 +1,14 @@
+{
+    "Id": "941af73e-12e7-42cf-853d-f79bb40068e7",
+    "Name": "",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "dist",
+    "PluginName": "Gauss",
+    "PluginImplementation": "mat",
+    "ParentComponentId": "9caafca7-6b3d-4fd5-b43b-2d0badebda60",
+    "ParentComponentType": "scenario",
+    "ComponentType": "disturbance"
+}

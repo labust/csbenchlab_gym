@@ -1,0 +1,23 @@
+{
+    "Id": "8582e3e1-de85-466e-b412-44a269ccd2bf",
+    "Name": "PID",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "PID",
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Mux": {
+        "Inputs": 1,
+        "Outputs": 1
+    },
+    "ComponentType": "controller",
+    "Subcontrollers": [],
+    "Subcomponents": [
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "slx"
+}

@@ -1,4 +1,7 @@
 {
-    "library": "marine_lib",
-    "version": "0.0.1"
+    "Library": "marine_lib",
+    "Id": "88df50c8-71f8-4fc0-b115-958a1357a9ca",
+    "Version": "0.0.1",
+    "Dependencies": [],
+    "Install": []
 }

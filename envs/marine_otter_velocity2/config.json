@@ -1,0 +1,8 @@
+{
+    "Id": "e28b07d8-94b6-4791-bb8b-7f4e501fe7eb",
+    "Name": "marine_otter_velocity",
+    "Version": "0.1",
+    "Ts": 0.05,
+    "ComponentType": "metadata",
+    "CoderExtrinsic": true
+}

@@ -1,0 +1,16 @@
+{
+    "Id": "84e3a9a4-3aa6-4114-bdb3-406d0ab13b8d",
+    "Name": "demo double integrator",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "demo_lib",
+    "LibVersion": "0.0.1",
+    "PluginType": "sys",
+    "PluginName": "demo_double_integrator",
+    "ComponentType": "system",
+    "Subcomponents": [
+        "Disturbance"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "slx"
+}

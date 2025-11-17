@@ -1,28 +1,13 @@
 {
-    "library": "data_driven_lib",
-    "version": "0.0.1",
-    "description": "Data driven library for CSBenchLab",
-    "authors": ["Luka Mandic"],
-    "plugins": [
+    "Library": "data_driven_lib",
+    "Plugins": [
         {
-            "type": "folder_scan",
-            "path": "src/m/ctl"
+            "Type": "folder_scan",
+            "Path": "src/m"
         },
         {
-            "type": "folder_scan",
-            "path": "src/m/dist"
-        },
-        {
-            "type": "folder_scan",
-            "path": "src/m/est"
-        },
-        {
-            "type": "folder_scan",
-            "path": "src/m/sys"
-        },
-        {
-            "type": "file",
-            "path": "src/slx/ctl.slx"
+            "Type": "file",
+            "Path": "src/slx/ctl.slx"
         }
     ]
 }

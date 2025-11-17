@@ -1,0 +1,23 @@
+{
+    "Id": "f59ee77a-779f-4908-b3a9-8bc2643b5716",
+    "Name": "DeePC_acados",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "data_driven_lib_new",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "DeePC",
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Mux": {
+        "Inputs": 1,
+        "Outputs": 1
+    },
+    "ComponentType": "controller",
+    "Subcontrollers": [],
+    "Subcomponents": [
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}

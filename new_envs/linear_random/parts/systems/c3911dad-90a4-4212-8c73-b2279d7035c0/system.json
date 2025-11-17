@@ -1,0 +1,13 @@
+{
+    "Id": "c3911dad-90a4-4212-8c73-b2279d7035c0",
+    "Name": "New System",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "sys",
+    "PluginName": "LinearSystem",
+    "Disturbance": {},
+    "ComponentType": "system",
+    "PluginImplementation": "mat"
+}

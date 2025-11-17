@@ -1,0 +1,12 @@
+{
+    "Id": "1e727098-795b-40af-9168-30502f01196e",
+    "Name": "Five steps",
+    "Description": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 35.0,
+    "Disturbance": {},
+    "Subcomponents": [
+        "Disturbance"
+    ]
+}

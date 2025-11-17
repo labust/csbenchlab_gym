@@ -1,0 +1,26 @@
+{
+    "Id": "2d380c9c-e855-4573-8b09-1a6f2d9436fa",
+    "Name": "Controller1",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "demo_lib",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "Controller1",
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Mux": {
+        "Inputs": [
+            1,
+            2
+        ],
+        "Outputs": ""
+    },
+    "ComponentType": "controller",
+    "Subcontrollers": [],
+    "Subcomponents": [
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "mat"
+}

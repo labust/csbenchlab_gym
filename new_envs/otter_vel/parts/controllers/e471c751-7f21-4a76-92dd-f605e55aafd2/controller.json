@@ -1,0 +1,27 @@
+{
+    "Id": "e471c751-7f21-4a76-92dd-f605e55aafd2",
+    "Name": "DeePC",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "data_driven_lib",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "DeePC",
+    "Callbacks": {
+        "Initialize": "",
+        "Step": "",
+        "Reset": "",
+        "Terminate": ""
+    },
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Components": [],
+    "Disturbance": {},
+    "Estimator": {},
+    "ComponentType": "controller",
+    "PluginImplementation": "mat",
+    "Mux": {
+    	"Inputs": 1,
+    	"Outputs": 1
+    	}
+}

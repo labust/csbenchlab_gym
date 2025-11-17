@@ -1,0 +1,26 @@
+{
+    "Id": "d3027185-0750-44fb-923a-57641d52c8d8",
+    "Name": "Controller2",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "demo_lib",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "Controller2",
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Mux": {
+        "Inputs": [
+            1,
+            2
+        ],
+        "Outputs": ""
+    },
+    "ComponentType": "controller",
+    "Subcontrollers": [],
+    "Subcomponents": [
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}
