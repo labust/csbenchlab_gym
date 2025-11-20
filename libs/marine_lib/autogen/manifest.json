@@ -1,0 +1,29 @@
+{
+    "Registry": {
+        "ctl": [],
+        "sys": [
+            {
+                "T": "sys",
+                "Name": "Otter",
+                "model_name": "mss_wrappers",
+                "rel_path": "Otter",
+                "Type": "slx",
+                "ComponentPath": "/home/luka/matlab/csbenchlab_gym/libs/marine_lib/src/mss_wrappers.slx:Otter",
+                "Lib": "marine_lib"
+            },
+            {
+                "T": "sys",
+                "Name": "catamaran6dof",
+                "model_name": "small_differential_catamaran",
+                "rel_path": "catamaran6dof",
+                "Type": "slx",
+                "ComponentPath": "/home/luka/matlab/csbenchlab_gym/libs/marine_lib/src/small_differential_catamaran.slx:catamaran6dof",
+                "Lib": "marine_lib"
+            }
+        ],
+        "est": [],
+        "dist": []
+    },
+    "Library": "marine_lib",
+    "Version": "0.0.1"
+}

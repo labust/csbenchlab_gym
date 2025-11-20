@@ -7,7 +7,7 @@ import numpy as np
 # Implement this to generate reference values for the metric
 
 @matlab_function('out_with_ref',
-    RefDimensions=[1], OutDimensions=[1], Grid="on", LineWidth=1.5
+    RefDimensions=[1], OutDimensions=[1], LineWidth=1.5
 )
 def metric(results):
     pass
