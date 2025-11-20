@@ -481,8 +481,8 @@ classdef DeePCHelpers
         end
 
         function [x_op, fval, exit_flag] = optim(optim_T, optim_f, A, b, lb, ub, x0)
-            % o = optimoptions('quadprog','Algorithm','interior-point-convex');            
-            o = optimoptions('quadprog','Algorithm','active-set', 'Display','off');  
+            o = optimoptions('quadprog','Algorithm','interior-point-convex', 'Display','off');            
+            % o = optimoptions('quadprog','Algorithm','active-set', 'Display','off');  
             [x_op, fval, exit_flag] = quadprog(optim_T, optim_f, [], [], A, b, lb, ub, x0, o);
         end
 

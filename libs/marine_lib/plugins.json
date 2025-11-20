@@ -10,6 +10,11 @@
             "Type": "file",
             "Path": "src/small_differential_catamaran.slx:catamaran6dof",
             "Name": "catamaran6dof"
-        }
+        },
+        {
+            "Type": "file",
+            "Path": "src/VesselSurgeNonlinear.m",
+            "Name": "VesselSurgeNonlinear"
+        },
     ]
 }
