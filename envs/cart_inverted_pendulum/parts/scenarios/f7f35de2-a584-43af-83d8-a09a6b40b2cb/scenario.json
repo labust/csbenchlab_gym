@@ -4,7 +4,7 @@
     "Description": "",
     "ConstHorizonReference": false,
     "ComponentType": "scenario",
-    "SimulationTime": 35.0,
+    "SimulationTime": 20.0,
     "Disturbance": {},
     "Subcomponents": [
         "Disturbance"

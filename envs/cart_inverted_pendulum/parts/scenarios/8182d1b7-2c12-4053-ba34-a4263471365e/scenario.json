@@ -4,7 +4,7 @@
     "Description": "",
     "ConstHorizonReference": false,
     "ComponentType": "scenario",
-    "SimulationTime": 35.0,
+    "SimulationTime": 10.0,
     "Disturbance": {
         "Id": "ac707da0-5c7f-45b8-801f-e056c0bde067",
         "ComponentType": "disturbance",
