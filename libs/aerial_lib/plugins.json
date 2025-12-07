@@ -1,0 +1,8 @@
+
+{
+    "Library": "aerial_lib",
+    "Plugins": [
+        // list your plugins here as json objects
+	    // specify the type of each to eather 'folder_scan' or 'file'
+    ]
+}

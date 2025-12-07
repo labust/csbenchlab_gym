@@ -1,0 +1,16 @@
+{
+    "Id": "1e9fb6a3-f53f-480c-a2d0-a3b9797384f4",
+    "Name": "Inverted pendulum - Linear",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "sys",
+    "PluginName": "LinearSystem",
+    "ComponentType": "system",
+    "Subcomponents": [
+        "Disturbance"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}

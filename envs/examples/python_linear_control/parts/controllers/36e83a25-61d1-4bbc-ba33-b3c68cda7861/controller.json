@@ -1,0 +1,20 @@
+{
+    "Id": "36e83a25-61d1-4bbc-ba33-b3c68cda7861",
+    "Name": "MPC",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "MPC",
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Mux": {},
+    "ComponentType": "controller",
+    "Subcontrollers": [],
+    "Subcomponents": [
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}

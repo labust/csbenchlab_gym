@@ -1,0 +1,20 @@
+{
+    "Id": "f9f6cdad-3f91-46c5-aba8-bb82b461dd9c",
+    "Name": "PID",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "PID",
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Mux": {},
+    "ComponentType": "controller",
+    "Subcontrollers": [],
+    "Subcomponents": [
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}

@@ -7,7 +7,9 @@
     "LibVersion": "0.0.1",
     "PluginType": "sys",
     "PluginName": "Otter",
-    "Subcomponents": ["Disturbance"],
+    "Subcomponents": [
+        "Disturbance"
+    ],
     "Disturbance": {},
     "ComponentType": "system",
     "PluginImplementation": "slx"

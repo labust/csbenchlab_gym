@@ -1,0 +1,7 @@
+{
+    "Id": "4d24171b-ad10-4cb2-8590-647ed48123e2",
+    "Name": "python_linear_control",
+    "Version": "0.1",
+    "Ts": 0.05,
+    "ComponentType": "metadata"
+}

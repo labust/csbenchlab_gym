@@ -1,0 +1,16 @@
+{
+    "Id": "4923acde-a3f4-4f97-ad41-986565478dc2",
+    "Name": "New System",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "common_systems",
+    "LibVersion": "0.0.1",
+    "PluginType": "sys",
+    "PluginName": "FourTankModel",
+    "ComponentType": "system",
+    "Subcomponents": [
+        "Disturbance"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}

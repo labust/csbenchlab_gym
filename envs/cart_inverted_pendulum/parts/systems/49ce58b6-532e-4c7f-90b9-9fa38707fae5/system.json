@@ -1,0 +1,16 @@
+{
+    "Id": "49ce58b6-532e-4c7f-90b9-9fa38707fae5",
+    "Name": "Inverted pendulum",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "common_systems",
+    "LibVersion": "0.0.1",
+    "PluginType": "sys",
+    "PluginName": "MovingCartInvertedPendulum",
+    "ComponentType": "system",
+    "Subcomponents": [
+        "Disturbance"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}

@@ -1,0 +1,20 @@
+{
+    "Id": "43a8b674-a981-4b52-9e74-b37728839260",
+    "Name": "Sliding mode",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "SlidingMode",
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Mux": {},
+    "ComponentType": "controller",
+    "Subcontrollers": [],
+    "Subcomponents": [
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}

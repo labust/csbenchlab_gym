@@ -1,0 +1,16 @@
+{
+    "Id": "8182d1b7-2c12-4053-ba34-a4263471365e",
+    "Name": "Up stabilization - noise",
+    "Description": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 35.0,
+    "Disturbance": {
+        "Id": "ac707da0-5c7f-45b8-801f-e056c0bde067",
+        "ComponentType": "disturbance",
+        "DestinationPath": "disturbances"
+    },
+    "Subcomponents": [
+        "Disturbance"
+    ]
+}

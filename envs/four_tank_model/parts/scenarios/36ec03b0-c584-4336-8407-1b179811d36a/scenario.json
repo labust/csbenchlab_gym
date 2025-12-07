@@ -1,0 +1,12 @@
+{
+    "Id": "36ec03b0-c584-4336-8407-1b179811d36a",
+    "Name": "New Scenario",
+    "Description": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 30.0,
+    "Disturbance": {},
+    "Subcomponents": [
+        "Disturbance"
+    ]
+}

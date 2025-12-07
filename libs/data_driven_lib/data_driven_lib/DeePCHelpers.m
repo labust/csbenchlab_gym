@@ -153,7 +153,7 @@ classdef DeePCHelpers
                     idx.uterm_v = Indexer(-1, 1);
                 end
             
-                total_constraints = total_constraints + ...
+                terminal_constraints = ...
                     p * terminal_constraint_size + ...
                     use_input_terminal_constraints * m * terminal_constraint_size;
             
@@ -162,9 +162,10 @@ classdef DeePCHelpers
                     if ~ (use_input_terminal_constraints == 0)
                         idx.uterm = Indexer(curr_state_dim + p * terminal_constraint_size + 1, ...
                             curr_state_dim + (m + p) * terminal_constraint_size);
-                        curr_state_dim = curr_state_dim + total_constraints;
+                        curr_state_dim = curr_state_dim + terminal_constraints;
                     end                    
                 end
+                total_constraints = total_constraints + terminal_constraints;
             end
 
             idx.total_constraints = total_constraints;
@@ -307,11 +308,11 @@ classdef DeePCHelpers
          
             optim_T = zeros(idx.state.sz);
             optim_f = zeros(idx.state.sz, 1);
-            optim_T = DeePCHelpers.set_optim_params(optim_T, idx, params);
+            optim_T = DeePCHelpers.set_optim_params(optim_T, A0, idx, params);
         end
 
 
-        function optim_T = set_optim_params(optim_T, idx, params)
+        function optim_T = set_optim_params(optim_T, A, idx, params)
             
             Tini = params.Tini;
             p = idx.p;
@@ -325,6 +326,7 @@ classdef DeePCHelpers
             lambda_s_ini = params.lambda_s_ini;
             lambda_term_y = params.lambda_term_y;
             lambda_term_u = params.lambda_term_u;
+            use_projected_regularization = params.use_projected_regularization;
 
             if params.pos_control == 1
                 optim_T(idx.yp.r, idx.yp.r) = DeePCHelpers.normalize_Q(params);
@@ -332,7 +334,14 @@ classdef DeePCHelpers
                 optim_T(idx.y.r, idx.y.r) = DeePCHelpers.normalize_Q(params);
             end
             optim_T(idx.u.r, idx.u.r) = DeePCHelpers.normalize_R(params);
-            optim_T(idx.a.r, idx.a.r) = lambda_a * eye(idx.a.sz) / idx.a.sz;
+            if ~use_projected_regularization
+                optim_T(idx.a.r, idx.a.r) = lambda_a * eye(idx.a.sz) / idx.a.sz;
+            else
+                a = A(idx.uini_v.b:idx.yini_v.e, idx.a.r);
+                PI = pinv(a) * a;
+                pp = (eye(idx.a.sz) - PI)' * (eye(idx.a.sz) - PI);
+                optim_T(idx.a.r, idx.a.r) = lambda_a / idx.a.sz * (pp' + pp) / 2; % ensure symetric
+            end
             optim_T(idx.s.b:idx.s.b+p*Tini-1, idx.s.b:idx.s.b+p*Tini-1) = kron(eye(Tini), diag(lambda_s_ini ./ Tini));
             optim_T(idx.s.b+p*Tini:idx.s.e, idx.s.b+p*Tini:idx.s.e) = kron(eye(params.L), diag(lambda_s ./ idx.s.sz));
   
@@ -481,8 +490,8 @@ classdef DeePCHelpers
         end
 
         function [x_op, fval, exit_flag] = optim(optim_T, optim_f, A, b, lb, ub, x0)
-            o = optimoptions('quadprog','Algorithm','interior-point-convex', 'Display','off');            
-            % o = optimoptions('quadprog','Algorithm','active-set', 'Display','off');  
+            % o = optimoptions('quadprog','Algorithm','interior-point-convex', 'Display','off');            
+            o = optimoptions('quadprog','Algorithm','active-set', 'Display','off');  
             [x_op, fval, exit_flag] = quadprog(optim_T, optim_f, [], [], A, b, lb, ub, x0, o);
         end
 
@@ -584,6 +593,7 @@ classdef DeePCHelpers
                 ParamDescriptor("use_overshoot_constraints", 1), ...
                 ParamDescriptor("use_input_terminal_constraints", 1), ...
                 ParamDescriptor("use_input_delta_constraints", 1), ...
+                ParamDescriptor("use_projected_regularization", 0), ...
                 ParamDescriptor("is_strict_terminal_constraint", 1), ...
                 ParamDescriptor("use_ref_integral", 0), ...
                 ParamDescriptor("Ki", 1), ...            

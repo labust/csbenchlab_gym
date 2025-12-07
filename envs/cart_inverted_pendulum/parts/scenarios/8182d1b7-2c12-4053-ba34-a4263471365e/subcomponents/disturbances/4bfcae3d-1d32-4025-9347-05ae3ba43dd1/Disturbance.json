@@ -1,0 +1,14 @@
+{
+    "Id": "4bfcae3d-1d32-4025-9347-05ae3ba43dd1",
+    "Name": "New Disturbance",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "dist",
+    "PluginName": "Gauss",
+    "PluginImplementation": "py",
+    "ParentComponentId": "8182d1b7-2c12-4053-ba34-a4263471365e",
+    "ParentComponentType": "scenario",
+    "ComponentType": "disturbance"
+}

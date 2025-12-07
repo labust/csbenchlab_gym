@@ -1,0 +1,20 @@
+{
+    "Id": "a2d09404-1425-4551-b056-e0738041c105",
+    "Name": "H infinity",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "HInfinity",
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Mux": {},
+    "ComponentType": "controller",
+    "Subcontrollers": [],
+    "Subcomponents": [
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}

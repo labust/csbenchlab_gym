@@ -1,0 +1,20 @@
+{
+    "Id": "6d1af3df-25b6-4eaa-b235-da23b8d2fd2d",
+    "Name": "LQR",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "LQR",
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Mux": {},
+    "ComponentType": "controller",
+    "Subcontrollers": [],
+    "Subcomponents": [
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}

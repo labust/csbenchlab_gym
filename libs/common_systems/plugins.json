@@ -1,0 +1,18 @@
+
+{
+    "Library": "common_systems",
+    "Plugins": [
+        {
+            "Type": "file",
+            "Path": "src/FourTankModel.py"
+        },
+        {
+  	    "Type": "file",
+            "Path": "src/DCMotor.py"
+        },
+	{
+            "Type": "file",
+            "Path": "src/MovingCartInvertedPendulum.py"
+        }
+    ]
+}

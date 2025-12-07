@@ -1,0 +1,7 @@
+{
+    "Id": "c294abcd-d14e-4291-a4b9-790d090f85b3",
+    "Name": "cart_inverted_pendulum",
+    "Version": "0.1",
+    "Ts": 0.05,
+    "ComponentType": "metadata"
+}

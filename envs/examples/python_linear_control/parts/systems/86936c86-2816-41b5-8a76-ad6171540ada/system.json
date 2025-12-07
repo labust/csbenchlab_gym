@@ -1,0 +1,16 @@
+{
+    "Id": "86936c86-2816-41b5-8a76-ad6171540ada",
+    "Name": "Linear",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "sys",
+    "PluginName": "LinearSystem",
+    "ComponentType": "system",
+    "Subcomponents": [
+        "Disturbance"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "py"
+}

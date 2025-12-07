@@ -83,7 +83,8 @@ classdef DeePC < Controller
                     this.data.optim_f, this.data.x_op, ...
                     idx, this.params);
 
-            this.data.optim_T = DeePCHelpers.set_optim_params(this.data.optim_T, idx, this.params);
+            this.data.optim_T = DeePCHelpers.set_optim_params(this.data.optim_T, ...
+                this.data.A, idx, this.params);
 
             if this.data.has_lt == 0
                 [x_op_new, fval_new, optim_exit_flag] =  DeePCHelpers.optim(...

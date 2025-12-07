@@ -1,0 +1,12 @@
+{
+    "Id": "f7f35de2-a584-43af-83d8-a09a6b40b2cb",
+    "Name": "Up stabilization",
+    "Description": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 35.0,
+    "Disturbance": {},
+    "Subcomponents": [
+        "Disturbance"
+    ]
+}
