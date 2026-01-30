@@ -41,7 +41,8 @@ classdef Otter12dof < DynSystem
             u = alloc * (200 * u);
 
             x0 = [this.xk_1; u];
-            [tout, yout] = ode23(@this.exfunc, [0, dt], x0);
+            options = odeset('Refine', 1);
+            [tout, yout] = ode45(@this.exfunc, [t, t+dt/2, t+dt], x0, options);
             this.xk_1 = yout(end, 1:12)';
             yk = this.xk_1(1);
         end

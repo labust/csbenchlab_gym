@@ -8,7 +8,9 @@
     "PluginType": "dist",
     "PluginName": "Gauss",
     "PluginImplementation": "mat",
-    "ParentComponentId": "9caafca7-6b3d-4fd5-b43b-2d0badebda60",
+    "ParentComponentId": "9caafca7-6b3d-4fd5-b43b-2d0badebda60",    
+    "ParentComponentName": "FiveStepsPerturbed",
     "ParentComponentType": "scenario",
-    "ComponentType": "disturbance"
+    "ComponentType": "disturbance",
+    "DestinationPath": "disturbances"
 }

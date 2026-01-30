@@ -199,12 +199,19 @@ classdef DeePCHelpers
 
         end
 
-        function A = update_data_matrix(idx, A, D_u, D_y, T, m, p, params)
+        function A = update_data_matrix(idx, A, D_u, D_y, H, T, m, p, params)
+
+            H_size = size(H);
+            if H_size ~= [1, 1]
+                A(idx.A_v.r, idx.a.r) = H;
+                return
+            end
+
             L = params.L; 
             Tini = params.Tini;
             H = zeros((m+p)*(L+Tini), (T-L-Tini+1));
             H = DDHelpers.combined_hankel_matrix(...
-                D_u, D_y, H, L+Tini);
+                D_u, D_y, L+Tini, H);
             A(idx.A_v.r, idx.a.r) = H;
         end
         
@@ -578,6 +585,7 @@ classdef DeePCHelpers
                 ParamDescriptor("n", 1), ...
                 ParamDescriptor("D_u", 0), ...
                 ParamDescriptor("D_y", 0), ...
+                ParamDescriptor("H", 0), ...
                 ParamDescriptor("end_point", 0), ...
                 ParamDescriptor("T", @(params) length(params.D_u)), ...
                 ParamDescriptor("R", 1), ...
