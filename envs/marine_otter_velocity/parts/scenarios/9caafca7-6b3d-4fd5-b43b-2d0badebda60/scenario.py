@@ -9,11 +9,11 @@ def scenario(scenario, dt, system_dims):
     reference = generate_steps(scenario, dt, system_dims, [0.8, 1.5, -1, 2, 0], 0)
     ic = np.zeros((system_dims["Outputs"]))
 
-    return ScenarioOptions(
+    return ExperimentOptions(
         reference=reference,
         ic=ic,
         system_parameter_overrides=overrides,
         random_seed=42,
-        num_evaluations=1000
+        num_evaluations=10
     )
 

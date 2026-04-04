@@ -9,9 +9,9 @@ import numpy as np
 
 @dataclass
 class ComponentParams:
-    K_p = 57.0360395290896,
-    K_i = 45.0805551814842,
-    K_d = 0,
-    K_N = 100,
-    saturation_max = 500
-    saturation_min = -300
+    K_p = np.array([57.0360395290896]) * 1 / 200
+    K_i = np.array([45.0805551814842]) * 1 / 300
+    K_d = np.array([0.0])
+    K_N = np.array([0.2])
+    saturation_max = np.array([1])
+    saturation_min = np.array([-1])

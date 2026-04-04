@@ -1,0 +1,16 @@
+{
+    "Id": "6582568e-6a07-4ca1-973d-ce726013b9e5",
+    "Name": "",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "csbenchlab",
+    "LibVersion": "0.0.1",
+    "PluginType": "dist",
+    "PluginName": "Gauss",
+    "PluginImplementation": "mat",
+    "ParentComponentId": "832a0fb6-0823-4b09-93b7-a1f8c841e784",
+    "ParentComponentName": "FiveStepsPerturbed",
+    "ParentComponentType": "scenario",
+    "ComponentType": "disturbance",
+    "DestinationPath": "disturbances"
+}

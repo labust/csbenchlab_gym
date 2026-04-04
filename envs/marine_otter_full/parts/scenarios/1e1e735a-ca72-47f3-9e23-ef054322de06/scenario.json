@@ -1,0 +1,16 @@
+{
+    "Id": "1e1e735a-ca72-47f3-9e23-ef054322de06",
+    "Name": "Five steps perturbed high noise",
+    "Description": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 60.0,
+    "Subcomponents": [
+        "Disturbance"
+    ],
+    "Disturbance": {
+        "Id": "d00b25fa-299c-4dde-a026-233da86bc131",
+        "ComponentType": "disturbance",
+        "DestinationPath": "disturbances"
+    }
+}

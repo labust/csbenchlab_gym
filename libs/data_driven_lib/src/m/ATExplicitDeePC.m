@@ -12,6 +12,8 @@ classdef ATExplicitDeePC < Controller
                 ParamDescriptor("u_max", inf), ...
                 ParamDescriptor("y_max", inf), ...
                 ParamDescriptor("y_min", inf), ...
+                ParamDescriptor("out_gain", 1), ...
+                ParamDescriptor("trend_threshold", 1), ...
             };
         log_description = { 
 
@@ -24,13 +26,15 @@ classdef ATExplicitDeePC < Controller
     end
 
     methods (Static)
-        function data = create_data_model(params, mux)
-            data.m = size(mux.Inputs, 1);
-            data.p = size(mux.Outputs, 1);
-            data.uini = zeros(params.Tini, data.m);
-            data.yini = zeros(params.Tini, data.p);
-            data.eta = zeros(data.p);
-            data.old_y_ref = zeros(data.p);
+        function data = create_data_model(options)
+            params = options.params;
+            mux = options.mux;
+            data.m = length(mux.Inputs);
+            data.p = length(mux.Outputs);
+            data.uini = zeros(params.Tini * data.m, 1);
+            data.yini = zeros(params.Tini * data.p, 1);
+            data.eta = zeros(data.p, 1);
+            data.old_y_ref = zeros(data.p, 1);
         end
     end
     
@@ -59,43 +63,32 @@ classdef ATExplicitDeePC < Controller
         function [this, u] = on_step(this, y_ref, y, dt)
             
             if this.params.use_ref_integral
-                
-                ref_change = abs(y_ref - this.data.old_y_ref) > 0.2;
-                dx = 0.3;
-                trend =  ((y - this.data.yini(1)) > dt * dx) ...
-                 -1* ((y - this.data.yini(1)) < -dt * dx);
-                is_far_from_ref = abs(y_ref - y) > 0.4;
-                if ~is_far_from_ref || (is_far_from_ref && trend == 0)
-                    if y_ref - y <= 0 && ~(trend < 0) || y_ref - y > 0 && ~(trend > 0) || trend == 0
-                        this.data.eta = this.data.eta + this.params.Ki * (y_ref - y) * dt;
-                    end
+                if this.params.use_ref_integral
+                    [y_ref, this.data] = DeePCHelpers.handle_ref_integral(y_ref, y, dt, this.data, this.params);
                 end
-                if ref_change || (is_far_from_ref && trend ~= 0)
-                    this.data.eta = zeros(this.data.p);
-                end
-
-                this.data.eta = max(min(this.data.eta, 1.9), -1.9); 
-                this.data.old_y_ref = 0.85*(this.data.old_y_ref) + 0.15 * y_ref;
             end
 
             this.data.yini = ...
-                DeePCHelpers.update_ini(y(1), this.data.yini, size(y, 1));
-            optim_u = evaluate_explicit(this.pwl_model, y_ref, this.uu, this.data, this.params);
+                DeePCHelpers.update_ini(y, this.data.yini, size(y, 1));
+            optim_u = evaluate_explicit(this.pwl_model, y_ref', this.uu, this.data, this.params);
         
-            optim_u = optim_u(1);
+            optim_u = optim_u(1:this.data.m);
             if isnan(optim_u)
                 if this.params.is_incremental
                     optim_u = 0;
                 else
-                    optim_u = this.data.uini(end);
+                    optim_u = [0;0];
+                    % optim_u = this.data.uini(end-this.data.m+1:end);
                 end
             end
+            
             
             if this.params.is_incremental
                 u = this.uu + optim_u;
             else
                 u = optim_u;
             end
+            u = u * this.params.out_gain;
             u = Utils.saturate(u, this.params.u_min, this.params.u_max);
             optim_u = u;
             if this.params.is_incremental

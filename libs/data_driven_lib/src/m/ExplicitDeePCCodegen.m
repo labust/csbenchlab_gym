@@ -28,7 +28,9 @@ classdef ExplicitDeePCCodegen < Controller
     end
 
     methods (Static)
-        function data = create_data_model(params, mux)
+        function data = create_data_model(options)
+            options.params = params;
+            options.mux = mux;
             data.m = size(mux.Inputs, 1);
             data.p = size(mux.Outputs, 1);
             data.uini = zeros(params.Tini, data.m);

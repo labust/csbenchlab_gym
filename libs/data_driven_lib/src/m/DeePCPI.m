@@ -16,8 +16,8 @@ classdef DeePCPI < Controller
     end
 
     methods (Static)
-        function data = create_data_model(params, dims)
-            data = DeePCHelpers.create_basic_data_model(params, dims);
+        function data = create_data_model(options)
+            data = DeePCHelpers.create_basic_data_model(options);
 
             data.deepc_step = 1;
             data.n_steps = 0;

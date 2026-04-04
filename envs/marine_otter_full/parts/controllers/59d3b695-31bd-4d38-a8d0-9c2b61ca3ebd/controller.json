@@ -1,0 +1,30 @@
+{
+    "Id": "59d3b695-31bd-4d38-a8d0-9c2b61ca3ebd",
+    "Name": "BankedDeePC_f",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "data_driven_lib",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "BankedDeePC",
+    "IsComposable": false,
+    "RefHorizon": 10,
+    "Mux": {
+        "Inputs": [
+            1,
+            6
+        ],
+        "Outputs": [
+            1,
+            2
+        ]
+    },
+    "Subcomponents": [
+        "Disturbance",
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "ComponentType": "controller",
+    "PluginImplementation": "mat",
+    "Subcontrollers": {}
+}

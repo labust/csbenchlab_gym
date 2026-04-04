@@ -1,0 +1,29 @@
+{
+    "Id": "98c800a5-166b-4f56-a587-1119bb5bc933",
+    "Name": "Explicit Fast",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "data_driven_lib",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "ExplicitDeePC",
+    "IsComposable": false,
+    "RefHorizon": 0,
+    "Mux": {
+        "Inputs": [
+            1,
+            6
+        ],
+        "Outputs": [
+            1,
+            2
+        ]
+    },
+    "ComponentType": "controller",
+    "Subcontrollers": [],
+    "Subcomponents": [
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "PluginImplementation": "mat"
+}

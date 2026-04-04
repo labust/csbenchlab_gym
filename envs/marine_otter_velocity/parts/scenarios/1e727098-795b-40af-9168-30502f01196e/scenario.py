@@ -5,7 +5,10 @@ import numpy as np
 
 def scenario(scenario, dt, system_dims):
 
-    overrides = {}
+    time = scenario["SimulationTime"]
+    overrides = {
+        "payload_mass": Timeseries([0, 35], time=[0, 9*time/20])
+    }
     reference = generate_steps(scenario, dt, system_dims, [1, 0, 1, 0], 0)
     ic = np.zeros((system_dims["Outputs"]))
 

@@ -10,4 +10,4 @@ import numpy as np
 @dataclass
 class ComponentParams:
     mpc_path = "data/mpc.mat"
-    gain = 1
+    out_gain = 0.6

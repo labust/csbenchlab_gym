@@ -70,7 +70,7 @@ classdef VesselSurgeNonlinear < DynSystem
             dims.Outputs = 1; % position and velocity outputs
         end
         
-        function data = create_data_model(params)
+        function data = create_data_model(options)
             % No matrices for nonlinear system, just pass empty data
             data = struct();
         end

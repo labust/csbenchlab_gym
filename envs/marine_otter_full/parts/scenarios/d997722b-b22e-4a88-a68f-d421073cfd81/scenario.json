@@ -1,0 +1,16 @@
+{
+    "Id": "d997722b-b22e-4a88-a68f-d421073cfd81",
+    "Name": "Sinuses high noise",
+    "Description": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 60.0,
+    "Subcomponents": [
+        "Disturbance"
+    ],
+    "Disturbance": {
+        "Id": "e3fab669-38a8-480e-9185-300544970487",
+        "ComponentType": "disturbance",
+        "DestinationPath": "disturbances"
+    }
+}

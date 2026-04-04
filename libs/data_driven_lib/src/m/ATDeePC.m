@@ -19,7 +19,10 @@ classdef ATDeePC < Controller
     end
 
     methods (Static)
-        function data = create_data_model(params, dims)
+        function data = create_data_model(options)
+            params = options.params;
+            dims = options.mux;
+
             data = DeePCHelpers.create_basic_data_model(params, dims);
 
             data.db_x_op = zeros(params.dataset_bank_size, data.idx.state.sz);
@@ -39,7 +42,7 @@ classdef ATDeePC < Controller
             idx = this.data.idx;
 
             this.data.A = DeePCHelpers.update_data_matrix(idx, this.data.A, ...
-                this.params.D_u, this.params.D_y, ...
+                this.params.D_u, this.params.D_y, [], ...
                 this.data.T, ...
                 idx.m, idx.p, this.params);
 
@@ -52,19 +55,23 @@ classdef ATDeePC < Controller
             this.data.yini = ...
                 DeePCHelpers.update_ini(y(1:this.data.vel_stop_idx), ...
                 this.data.yini, idx.p);
-         
+
             this.data.b(idx.uini_v.r) = this.data.uini;
             this.data.b(idx.yini_v.r) = this.data.yini;
-         
+
+            if this.params.use_ref_integral
+                [y_ref, this.data] = DeePCHelpers.handle_ref_integral(y_ref, y, dt, this.data, this.params);
+            end
+
             this.data.A = DeePCHelpers.update_data_matrix(idx, this.data.A, ...
-                trajectory.D_u, trajectory.D_y, this.data.T, ...
+                trajectory.D_u, trajectory.D_y, [], this.data.T, ...
                 idx.m, idx.p, this.params);
 
-            end_point = trajectory.end_point;
+            static_gain = trajectory.static_gain;
             [this.data.b, this.data.A_lt, ...
                 this.data.b_lt, this.data.optim_f, this.data.x_op] = ...
                     DeePCHelpers.update_matrices(y_ref, y, ...
-                        this.data.vel_stop_idx, end_point, ...
+                        this.data.vel_stop_idx, static_gain, ...
                         this.data.b, ...
                         this.data.A_lt, this.data.b_lt, ...
                         this.data.optim_f, this.data.x_op, ...
@@ -84,13 +91,14 @@ classdef ATDeePC < Controller
                     this.data.lb, this.data.ub, ...
                     this.data.x_op);
             end
-            u = zeros(1, 1);
+            u = zeros(this.data.m, 1);
             if optim_exit_flag >= 0 
                 this.data.x_op = x_op_new; 
                 u(:) = this.data.x_op(idx.u.b:idx.u.b+idx.m-1);
             else
-                % u = this.data.x_op(idx.u.b:idx.u.b+idx.m-1);
+                u = this.data.x_op(idx.u.b:idx.u.b+idx.m-1);
             end
+            u = Utils.saturate(u .* this.params.out_gain, this.params.u_min, this.params.u_max);
             this.data.fval = fval_new;
 
             this.data.uini = ...
@@ -115,22 +123,20 @@ classdef ATDeePC < Controller
          end
 
          function value = trajectory_arg_struct(params, mux)
-
-            if isa(params.T, 'function_handle')
-                T = params.T(params);
+            if is_valid_field(params, 'T')
+                if isa(params.T, 'function_handle')
+                    T = params.T(params);
+                else
+                    T = params.T;
+                end
             else
-                T = params.T;
+                T = length(params.D_u);
             end
                 
             input_sz = length(mux.Inputs);
             output_sz = length(mux.Outputs);
-            if params.pos_control == 1
-                assert(mod(input_sz, 2) == 0, ...
-                    'Pos control must have even number of states');
-                db_input_sz = input_sz / 2;
-            else
-                db_input_sz = input_sz;
-            end
+
+            db_input_sz = input_sz;
 
             value.D_u = [T, db_input_sz];
             value.D_y = [T, output_sz];
@@ -145,7 +151,7 @@ classdef ATDeePC < Controller
             % else
             %     value.D_y = T;
             % end
-            value.end_point = output_sz;
+            value.static_gain = output_sz;
         end
     end
 end

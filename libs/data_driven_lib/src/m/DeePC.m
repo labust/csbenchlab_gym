@@ -12,7 +12,9 @@ classdef DeePC < Controller
     end
 
     methods (Static)
-        function data = create_data_model(params, mux)
+        function data = create_data_model(options)
+            params = options.params;
+            mux = options.mux;
             data = DeePCHelpers.create_basic_data_model(params, mux);
         end
     end
@@ -36,48 +38,36 @@ classdef DeePC < Controller
         end
 
         function [this, u] = on_step(this, y_ref, y, dt)
-         
+            
             idx = this.data.idx;
             this.data.yini = ...
-                DeePCHelpers.update_ini(y(1), this.data.yini, size(y, 1));
-
-            this.data.b(idx.uini_v.r) = this.data.uini;
-            this.data.b(idx.yini_v.r) = this.data.yini;
-
-
+                DeePCHelpers.update_ini(y, this.data.yini, size(y, 1));
+            
             if this.params.use_ref_integral
-                y_ref_v = y_ref(end);
-                ref_change = abs(y_ref_v - this.data.old_y_ref) > 0.2;
-                dx = 0.3;
-                trend =  ((y - this.data.yini(1)) > dt * dx) ...
-                 -1* ((y - this.data.yini(1)) < -dt * dx);
-                is_far_from_ref = abs(y_ref_v - y) > 0.4;
-                if ~is_far_from_ref || (is_far_from_ref && trend == 0)
-                    if y_ref_v - y <= 0 && ~(trend < 0) || y_ref_v - y > 0 && ~(trend > 0) || trend == 0
-                        this.data.eta = this.data.eta + this.params.Ki * (y_ref_v - y) * dt;
-                    end
-                end
-                if ref_change || (is_far_from_ref && trend ~= 0)
-                    this.data.eta = zeros(this.data.p);
-                end
-
-                this.data.eta = max(min(this.data.eta, this.params.y_max), this.params.y_min); 
-                y_ref = y_ref_v + this.data.eta;
-                this.data.old_y_ref = 0.85*(this.data.old_y_ref) + 0.15 * y_ref;
+                [y_ref, this.data] = DeePCHelpers.handle_ref_integral(y_ref, y, dt, this.data, this.params);
             end
-
 
             this.data.A = DeePCHelpers.update_data_matrix(idx, this.data.A, ...
                 this.params.D_u, this.params.D_y, this.params.H, ...
                 this.data.T, ...
                 this.data.m, this.data.p, this.params);
 
+
+            if this.params.use_ini_filter
+                yini = DeePCHelpers.filter_ini(this.data.uini, this.data.yini, this.data.A, idx);
+            else
+                yini = this.data.yini;
+            end
+
+            this.data.b(idx.uini_v.r) = this.data.uini;
+            this.data.b(idx.yini_v.r) = yini;
+
             % x_op = this.data.x_op;
 
             [this.data.b, this.data.A_lt, ...
              this.data.b_lt, this.data.optim_f, this.data.x_op] = ...
                 DeePCHelpers.update_matrices(y_ref, y, ...
-                    this.data.vel_stop_idx, this.params.end_point, ...
+                    this.data.vel_stop_idx, this.params.static_gain, ...
                     this.data.b, ...
                     this.data.A_lt, this.data.b_lt, ...
                     this.data.optim_f, this.data.x_op, ...
@@ -102,13 +92,14 @@ classdef DeePC < Controller
             this.data.fval = fval_new;
             
             % u = [this.data.fval; x_op_new(1); optim_exit_flag];
-            u = 0;
+            u = zeros(this.data.m, 1);
             if optim_exit_flag >= 0 
                 this.data.x_op = x_op_new; 
             else
                 u(:) = optim_exit_flag;
             end
-            u(:) = this.data.x_op(idx.u.b);
+            u(:) = this.data.x_op(idx.u.b:idx.u.b+this.data.m-1);
+            u = Utils.saturate(u, this.params.u_min, this.params.u_max);
 
             this.data.uini = ...
                 DeePCHelpers.update_ini(u, this.data.uini, size(u, 1));

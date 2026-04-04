@@ -1,12 +1,12 @@
 {
     "Id": "f41ef9e4-ba34-416c-84b6-7794956a3c04",
-    "Name": "DeePC",
+    "Name": "DeePC_d",
     "Description": "",
     "LibVersionHash": "",
     "Lib": "data_driven_lib",
     "LibVersion": "0.0.1",
     "PluginType": "ctl",
-    "PluginName": "ExplicitDeePC",
+    "PluginName": "DeePC",
     "IsComposable": false,
     "RefHorizon": 1,
     "Mux": {

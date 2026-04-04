@@ -8,6 +8,10 @@
         {
             "Type": "file",
             "Path": "src/slx/ctl.slx"
+        },
+        {
+            "Type": "file",
+            "Path": "src/py/DeePC_Casadi.py"
         }
     ]
 }

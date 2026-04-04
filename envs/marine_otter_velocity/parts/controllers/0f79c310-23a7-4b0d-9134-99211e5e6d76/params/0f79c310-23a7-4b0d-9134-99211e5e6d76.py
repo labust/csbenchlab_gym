@@ -22,3 +22,4 @@ class ComponentParams:
     y_min: Any = None
     y_max: Any = None
     base_variable_name: int = 0
+    out_gain = 1

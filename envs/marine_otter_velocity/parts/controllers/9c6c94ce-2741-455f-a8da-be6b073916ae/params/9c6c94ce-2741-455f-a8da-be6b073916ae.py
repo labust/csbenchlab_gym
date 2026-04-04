@@ -12,9 +12,10 @@ class ComponentParams:
     solution_path: int = "data/pwl.mat"
     Tini: int = 3
     is_incremental: int = 0
-    use_ref_integral: int = 0
+    use_ref_integral: int = 1
     Ki: int = 0.7
     u_min: Any = -500
     u_max: Any = 500
     y_max: Any = 4
     y_min: Any = -4
+    out_gain: int = 1/500

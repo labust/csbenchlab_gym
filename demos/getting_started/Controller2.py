@@ -28,7 +28,7 @@ class Controller2(Controller):
     ]
 
     @staticmethod
-    def create_data_model(params, mux):
+    def create_data_model(options):
         from types import SimpleNamespace
         return SimpleNamespace(
             d1=np.zeros(3),

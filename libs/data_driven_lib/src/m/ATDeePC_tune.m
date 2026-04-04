@@ -17,8 +17,8 @@ classdef ATDeePC_tune < Controller
     end
 
     methods (Static)
-        function data = create_data_model(params, dims)
-            data = ATDeePC.create_data_model(params, dims);
+        function data = create_data_model(options)
+            data = ATDeePC.create_data_model(options);
         end
 
          

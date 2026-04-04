@@ -30,6 +30,18 @@ classdef Otter12dof < DynSystem
         
         function this = on_configure(this)
             this.xk_1 = zeros(12, 1);
+            if ~is_valid_field(this.params, 'mp')
+                this.params.mp = 0;
+            end
+            if ~is_valid_field(this.params, 'rp')
+                this.params.rp = [0;0;0];
+            end
+            if ~is_valid_field(this.params, 'V_c')
+                this.params.V_c = 0;
+            end
+            if ~is_valid_field(this.params, 'beta_c')
+                this.params.beta_c = 0;
+            end
         end
         
         function [this, yk] = on_step(this, u, t, dt)
@@ -37,14 +49,27 @@ classdef Otter12dof < DynSystem
                 u = [u; 0];
             end
 
-            alloc = inv([1 1; 0.395 -0.395]);
-            u = alloc * (200 * u);
+            alloc = [1 1; 1 -1];
+            n = alloc * (u);
 
-            x0 = [this.xk_1; u];
+            k_pos = 0.02216/2;                      
+            k_neg = 0.01289/2;  
+            
+            gain_pos = 119.6820;
+            gain_neg = 66.7080;
+            
+            for i = 1:1:2
+                if n(i) > 0              % saturation, physical limits
+                   n(i) = sqrt(n(i) / k_pos * gain_pos); 
+                else
+                   n(i) = -sqrt(-n(i) / k_neg * gain_neg); 
+                end
+            end
+            x0 = [this.xk_1; n];
             options = odeset('Refine', 1);
             [tout, yout] = ode45(@this.exfunc, [t, t+dt/2, t+dt], x0, options);
             this.xk_1 = yout(end, 1:12)';
-            yk = this.xk_1(1);
+            yk = this.xk_1;
         end
         
         function this = on_reset(this)
@@ -58,7 +83,7 @@ classdef Otter12dof < DynSystem
             dims.Outputs = 1; % position and velocity outputs
         end
         
-        function data = create_data_model(params)
+        function data = create_data_model(options)
             % No matrices for nonlinear system, just pass empty data
             data = struct();
         end

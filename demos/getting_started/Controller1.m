@@ -12,7 +12,8 @@ classdef Controller1 < Controller
     end
 
     methods (Static)
-        function data = create_data_model(params, dims)
+        function data = create_data_model(options)
+            params = options.params;
             data.d1 = zeros(params.p1, params.p1);
             data.d12 = params.p12;
             data.log1 = zeros(1);

@@ -1,0 +1,16 @@
+{
+    "Id": "85ae8ae8-3421-447e-86e6-f1860a57dbe5",
+    "Name": "Two steps high noise",
+    "Description": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 60.0,
+    "Disturbance": {
+        "Id": "ccaeaedb-34fb-4469-93e3-0e771cb356d7",
+        "ComponentType": "disturbance",
+        "DestinationPath": "disturbances"
+    },
+    "Subcomponents": [
+        "Disturbance"
+    ]
+}

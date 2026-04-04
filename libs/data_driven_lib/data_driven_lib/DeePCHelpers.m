@@ -12,7 +12,7 @@ classdef DeePCHelpers
 
         function sini = update_ini(s, sini, d)
             sini = circshift(sini, -d);
-            sini(end-d+1:end) = s;
+            sini(end-d+1:end, :) = s;
         end
 
         function [lb, ub] = configure_bounds(lb, ub, idx, params)
@@ -42,23 +42,65 @@ classdef DeePCHelpers
             end
         end
 
+        function [y_ref, data] = handle_ref_integral(y_ref, y, dt, data, params)
+            y_ref_v = y_ref(1, :);
+            p = data.p;
+            trend_threshold = params.trend_threshold;
+            if ~any(trend_threshold)
+                trend_threshold = 0.1 * ones(p, 1);
+            end
+            ref_change = abs(y_ref_v' - data.old_y_ref) > 0.2;
+            dx = trend_threshold .* params.y_max;
+            trend = ((y - data.yini(1:p)) > dt * dx) ...
+             -1* ((y - data.yini(1:p)) < -dt * dx);
+            is_far_from_ref = abs(y_ref_v' - y) > 0.8*dx;
+            
+            for i=1:p
+                d = ((y_ref(i) - y(i)) > 0) ...
+                    -1 * ((y_ref(i) - y(i)) < 0);
+                if ~is_far_from_ref(i) || (is_far_from_ref(i) && trend(i) ~= d)
+                    if y_ref_v(i) - y(i) <= 0 && ~(trend(i) < 0) ...
+                            || y_ref_v(i) - y(i) > 0 && ~(trend(i) > 0) || trend(i) == 0
+                        data.eta(i) = data.eta(i) + params.Ki(i) ...
+                            * (y_ref_v(i) - y(i)) * dt;
+                    end
+                end
+                if ref_change(i)
+                    data.eta(i) = 0;
+                end
+            end
+
+            data.eta = max(min(data.eta, params.y_max), params.y_min); 
+            y_ref = y_ref_v + data.eta';
+            data.old_y_ref = 0.85*(data.old_y_ref) + 0.15 * y_ref';
+        end
+
+        function H = extract_data_matrix_from_A(A, idx)
+            H = A(idx.A_v.r, idx.a.r);
+        end
+
 
         function data = create_basic_data_model(params, mux)
             data.Ts = params.Ts;
             [data.T, data.m, data.p] = ...
                 DeePCHelpers.get_traj_info(params.D_u, params.D_y);
             data.L = params.L;
-            data.n = params.n;
             data.Tini = params.Tini;
+
+            if data.m ~= length(mux.Inputs)        
+                error(strcat("Input trajectory and input signal size do not match " + ...
+                    "size(D_u) = [", num2str(size(params.D_u)), "]; size(u) = [", num2str(size(mux.Inputs)), "];"));
+            end
+
+            if data.p ~= length(mux.Outputs)
+                error(strcat("Output trajectory and output signal size do not match " + ...
+                    "size(D_y) = [", num2str(size(params.D_y)), "]; size(y) = [", num2str(size(mux.Outputs)), "];"));
+            end
 
             DeePCHelpers.check_param_dims(data.m, data.p, params)
 
 
-            if params.pos_control == 1
-                data.vel_stop_idx = length(mux.Inputs) / 2;
-            else
-                data.vel_stop_idx = length(mux.Inputs);
-            end
+            data.vel_stop_idx = length(mux.Inputs);
 
             data.idx = DeePCHelpers.set_param_indices_and_dims(params, data.T, data.m, data.p);
             data.x_op_u = zeros(data.m * params.L, 1);
@@ -73,18 +115,30 @@ classdef DeePCHelpers
             data.ub = ones(height(data.x_op), 1) * inf;
             data.fval = 0;
 
-            data.old_y_ref = 0;
-            data.eta = zeros(data.p);
+            data.old_y_ref = zeros(data.p, 1);
+            data.eta = zeros(data.p, 1);
             data.has_lt = 1;
             if size(data.b_lt, 1) == 1 && data.b_lt == 0
                 data.has_lt = 0;
             end
         end
 
+        function yini = filter_ini(uini, yini, A, idx)
+            H = DeePCHelpers.extract_data_matrix_from_A(A, idx);
+            m = idx.m;
+            p = idx.p;
+            Tini = idx.Tini;
+            [Up, Yp, Uf, Yf] = hankel_extract(H, m, p, Tini);
+            T = ini_embedding_svd_split(Up, Yp, Uf, Yf, 4);
+
+            z_ini = T.T * [uini; yini];
+            yini = T.W * [uini; z_ini];
+
+        end
+
         function idx = set_param_indices_and_dims(params, T, m, p)
             Tini = params.Tini;
             L = params.L; Lc = params.Lc;
-            pos_control = params.pos_control;
 
             affine_constraint = params.affine_constraint;
             terminal_constraint_size = params.terminal_constraint_size;
@@ -94,6 +148,8 @@ classdef DeePCHelpers
             use_overshoot_constraints = params.use_overshoot_constraints;
             idx.m  = m;
             idx.p = p;
+            idx.L = L;
+            idx.Tini = Tini;
             
             % ROWS DIMENSIONS
             idx.uini_v = Indexer(1, m*Tini);
@@ -105,18 +161,10 @@ classdef DeePCHelpers
             % COLS DIMENSIONS
             idx.u = Indexer(1, m*L);
             idx.y = Indexer(m*L+1, (m + p)*L);
-            
-            if pos_control == 1
-                idx.yp = Indexer((m + p)*L + 1, (m + 2*p) * L);
-                pos_add = L;
-            else
-                % not used
-                idx.yp = Indexer(-1, -1);
-                pos_add = 0;
-            end
+
             
             dim_a = T-L-Tini+1;
-            curr_state_dim = (m + p) * L + pos_add;
+            curr_state_dim = (m + p) * L;
             curr_v_dim = (m + p) * (Tini + L);
                         
             idx.s = Indexer(curr_state_dim+1, curr_state_dim + p*(L+Tini));
@@ -174,12 +222,7 @@ classdef DeePCHelpers
 
             idx.a = Indexer(curr_state_dim + 1, curr_state_dim + dim_a);
             curr_state_dim = curr_state_dim + dim_a;
-            
-            if pos_control == 1
-                idx.yp_v = Indexer(curr_v_dim + 1, curr_v_dim + pos_add);
-            else
-                idx.yp_v = Indexer(-1, -1);
-            end
+          
 
             idx.state = Indexer(1, curr_state_dim);
 
@@ -202,7 +245,7 @@ classdef DeePCHelpers
         function A = update_data_matrix(idx, A, D_u, D_y, H, T, m, p, params)
 
             H_size = size(H);
-            if H_size ~= [1, 1]
+            if all(H_size ~= [0, 0]) && all(H_size ~= [1, 1])
                 A(idx.A_v.r, idx.a.r) = H;
                 return
             end
@@ -236,7 +279,7 @@ classdef DeePCHelpers
             A0 = zeros([idx.A_v.sz + idx.total_constraints, idx.state.sz]);
             b0 = zeros(idx.A_v.sz + idx.total_constraints, 1);
             
-            A0 = DeePCHelpers.update_data_matrix(idx, A0, params.D_u, params.D_y, ...
+            A0 = DeePCHelpers.update_data_matrix(idx, A0, params.D_u, params.D_y, [], ...
                 T, m, p, params);
             
             A0(idx.u_v.r, idx.u.r) = -eye(m * L);
@@ -296,22 +339,6 @@ classdef DeePCHelpers
                 A_lt = [A_lt; zeros(idx.y_lt.sz, width(A0))];
                 b_lt = [b_lt; zeros(idx.y_lt.sz, width(b0))];
             end
-
-            if params.pos_control == 1
-                Ap = -eye(idx.yp.sz);
-                Ay = ones(idx.yp.sz);
-                Ay = tril(Ay) * params.Ts;
-                
-                A0_prev = A0;
-                b0_prev = b0;
-                A0 = zeros(height(A0) + idx.yp.sz, width(A0));
-                b0 = zeros(height(b0) + idx.yp.sz, 1);
-            
-                b0(1:idx.yp_v.b-1, 1) = b0_prev;
-                A0(1:idx.yp_v.b-1, :) = A0_prev;
-                A0(idx.yp_v.b:idx.yp_v.e, idx.y.b:idx.y.e) = Ay;
-                A0(idx.yp_v.b:idx.yp_v.e, idx.yp.b:idx.yp.e) = Ap;
-            end
          
             optim_T = zeros(idx.state.sz);
             optim_f = zeros(idx.state.sz, 1);
@@ -328,26 +355,24 @@ classdef DeePCHelpers
             use_input_terminal_constraints = params.use_input_terminal_constraints;
             u_max = params.u_max;
             y_max = params.y_max;
-            lambda_a = params.lambda_a;
+            lambda_g = params.lambda_g;
             lambda_s = params.lambda_s;
             lambda_s_ini = params.lambda_s_ini;
             lambda_term_y = params.lambda_term_y;
             lambda_term_u = params.lambda_term_u;
             use_projected_regularization = params.use_projected_regularization;
 
-            if params.pos_control == 1
-                optim_T(idx.yp.r, idx.yp.r) = DeePCHelpers.normalize_Q(params);
-            else 
-                optim_T(idx.y.r, idx.y.r) = DeePCHelpers.normalize_Q(params);
-            end
+
+            optim_T(idx.y.r, idx.y.r) = DeePCHelpers.normalize_Q(params);
+
             optim_T(idx.u.r, idx.u.r) = DeePCHelpers.normalize_R(params);
             if ~use_projected_regularization
-                optim_T(idx.a.r, idx.a.r) = lambda_a * eye(idx.a.sz) / idx.a.sz;
+                optim_T(idx.a.r, idx.a.r) = lambda_g * eye(idx.a.sz) / idx.a.sz;
             else
                 a = A(idx.uini_v.b:idx.yini_v.e, idx.a.r);
                 PI = pinv(a) * a;
                 pp = (eye(idx.a.sz) - PI)' * (eye(idx.a.sz) - PI);
-                optim_T(idx.a.r, idx.a.r) = lambda_a / idx.a.sz * (pp' + pp) / 2; % ensure symetric
+                optim_T(idx.a.r, idx.a.r) = lambda_g / idx.a.sz * (pp' + pp) / 2; % ensure symetric
             end
             optim_T(idx.s.b:idx.s.b+p*Tini-1, idx.s.b:idx.s.b+p*Tini-1) = kron(eye(Tini), diag(lambda_s_ini ./ Tini));
             optim_T(idx.s.b+p*Tini:idx.s.e, idx.s.b+p*Tini:idx.s.e) = kron(eye(params.L), diag(lambda_s ./ idx.s.sz));
@@ -363,7 +388,7 @@ classdef DeePCHelpers
             end
         end
 
-        function [b, A_lt, b_lt, optim_f, x0] = update_matrices(y_ref, y, vel_stop_idx, end_point, b, A_lt, b_lt, optim_f, x0, idx, params)
+        function [b, A_lt, b_lt, optim_f, x0] = update_matrices(y_ref, y, vel_stop_idx, static_gain, b, A_lt, b_lt, optim_f, x0, idx, params)
 
             term = params.terminal_constraint_size;
             use_input_delta_constraints = params.use_input_delta_constraints;
@@ -376,40 +401,25 @@ classdef DeePCHelpers
             yd = y(1:vel_stop_idx);
 
             if size(y_ref, 1) == 1
-                yrefd = repmat(y_ref(1, 1:vel_stop_idx), 1, L)';
+                yrefd = repmat(y_ref(1, 1:vel_stop_idx), L, 1);
             else
                 yrefd = y_ref(:, 1:vel_stop_idx);
             end
 
-            if params.pos_control == 1
-                yp = y(vel_stop_idx+1:end);
-                if size(y_ref, 1) == 1
-                    yrefp = repmat(y_ref(1, vel_stop_idx+1:end), L, 1);
-                else
-                    yrefp = y_ref(:, vel_stop_idx+1:end);
-                end
-                ref = yrefp;
-                ref_v = saturate(params.k' .* (yrefp - yp), params.y_min, params.y_max);       
-                term_v = ref_v(end, :);
-
-                ic = yp;
-                b(idx.yp_v.r, :) = -repmat(yp, idx.yp_v.sz, 1);
-
-                rt = ref';
-                optim_f(idx.yp.r) = DeePCHelpers.normalize_Q(params) * (- rt(:));
-                ref_u = saturate(ref_v ./ end_point', params.u_min, params.u_max);
-                rt(:, :) = ref_u';
-                optim_f(idx.u.r) = DeePCHelpers.normalize_R(params) * (- rt(:));
+            
+            ref = yrefd;
+            ic = yd;
+            term_v = ref(end, :);                
+            rt = ref';
+            optim_f(idx.y.r) = DeePCHelpers.normalize_Q(params) * (- rt(:));
+            if size(static_gain, 2) == 1
+                ref_static =  ref ./ static_gain';
             else
-                ref = yrefd;
-                ic = yd;
-                term_v = ref(end, :);                
-                rt = ref';
-                optim_f(idx.y.r) = 2 * DeePCHelpers.normalize_Q(params) * (- rt(:));
-                ref_u = saturate(ref ./ end_point', params.u_min, params.u_max);
-                rt(:, :) = ref_u';
-                optim_f(idx.u.r) = 2 * DeePCHelpers.normalize_R(params) * (- rt(:));
+                ref_static = ref / static_gain';
             end
+            ref_u = saturate(ref_static, params.u_min, params.u_max);
+            rt(:, :) = ref_u';
+            optim_f(idx.u.r) = DeePCHelpers.normalize_R(params) * (- rt(:));
 
             last_u = x0(idx.u.b:idx.u.b+idx.m-1);
           
@@ -428,8 +438,14 @@ classdef DeePCHelpers
                 b(idx.yterm_v.r) = ...
                     repmat(saturate(term_v, params.y_min, params.y_max), 1, term)';
                 if ~ (params.use_input_terminal_constraints == 0)
+                    if size(static_gain, 2) == 1
+                        value = b(idx.yterm_v.r) ./ repmat(static_gain, term, 1);
+                    else
+                        st = kron(eye(term), inv(static_gain));
+                        value = st * b(idx.yterm_v.r);
+                    end
                     b(idx.uterm_v.r) = ...
-                        saturate(b(idx.yterm_v.r) ./ repmat(end_point, term, 1), params.u_min, params.u_max);
+                        saturate(value, params.u_min, params.u_max);
                 end
 
                 if params.is_strict_terminal_constraint == 0
@@ -457,13 +473,9 @@ classdef DeePCHelpers
                 for i = idx.y_lt.b : idx.y_lt.e -1 % L-1 constraints
                     yidx = i - idx.y_lt.b;
                     
-                    if params.pos_control == 1
-                        A_lt(i, idx.yp.b + yidx + 1) = -sgn;
-                        A_lt(i, idx.yp.b + yidx) = sgn;
-                    else
-                        A_lt(i, idx.y.b + yidx + 1) = -sgn;
-                        A_lt(i, idx.y.b + yidx) = sgn;
-                    end
+
+                    A_lt(i, idx.y.b + yidx + 1) = -sgn;
+                    A_lt(i, idx.y.b + yidx) = sgn;
 
 
                     b_lt(i, :) = 0;
@@ -518,84 +530,83 @@ classdef DeePCHelpers
                 error_msg{end+1} = ['Matrix Q should either be a ' ...
                     num2str(p), '-dimensional column vector of diagonal' ...
                     ' elements of Q or a ', ...
-                    num2str(p) 'x' num2str(p),  ' matrix.', newline];
+                    num2str(p) 'x' num2str(p),  ' matrix.'];
             end
 
             if size(params.R, 1) ~= m ...
                     && ~isequal(size(params.Q), [m, m])
-                error_msg{end+1} = ['Matrix Q should either be a ' ...
+                error_msg{end+1} = ['Matrix R should either be a ' ...
                     num2str(m), '-dimensional column vector of diagonal' ...
-                    ' elements of Q or a ', ...
-                    num2str(m) 'x' num2str(m),  ' matrix.', newline];
+                    ' elements of R or a ', ...
+                    num2str(m) 'x' num2str(m),  ' matrix.'];
             end
 
             if size(params.u_max, 1) ~= m
-                error_msg{end+1} = ['Parameter u_max must have dimension ', num2str(m), '.', newline];
+                error_msg{end+1} = ['Parameter u_max must have dimension ', num2str(m), '.'];
             end
 
             if size(params.u_min, 1) ~= m
-                error_msg{end+1} = ['Parameter u_min must have dimension ', num2str(m), '.', newline];
+                error_msg{end+1} = ['Parameter u_min must have dimension ', num2str(m), '.'];
             end
 
             if size(params.y_max, 1) ~= p
-                error_msg{end+1} = ['Parameter y_max must have dimension ', num2str(p), '.', newline];
+                error_msg{end+1} = ['Parameter y_max must have dimension ', num2str(p), '.'];
             end
 
             if size(params.y_min, 1) ~= p
-                error_msg{end+1} = ['Parameter y_min must have dimension ', num2str(p), '.', newline];
+                error_msg{end+1} = ['Parameter y_min must have dimension ', num2str(p), '.'];
             end
 
             if size(params.lambda_s, 1) ~= p
-                error_msg{end+1} = ['Parameter lambda_s must have dimension ', num2str(p), '.', newline];
+                error_msg{end+1} = ['Parameter lambda_s must have dimension ', num2str(p), '.'];
             end
 
             if size(params.lambda_s_ini, 1) ~= p
-                error_msg{end+1} = ['Parameter lambda_s_ini must have dimension ', num2str(p), '.', newline];
+                error_msg{end+1} = ['Parameter lambda_s_ini must have dimension ', num2str(p), '.'];
             end
             
             if params.use_input_delta_constraints
                 if size(params.input_delta, 1) ~= m
-                    error_msg{end+1} = ['Parameter input_delta must have dimension ', num2str(m), '.', newline];
+                    error_msg{end+1} = ['Parameter input_delta must have dimension ', num2str(m), '.'];
                 end
             end
             
             if params.terminal_constraint_size > 0 && ...
                     ~params.is_strict_terminal_constraint
                 if size(params.lambda_term_y, 1) ~= p
-                    error_msg{end+1} = ['Parameter lambda_term_y must have dimension ', num2str(p), '.', newline];
+                    error_msg{end+1} = ['Parameter lambda_term_y must have dimension ', num2str(p), '.'];
                 end
                 if params.use_input_delta_constraints
                     if size(params.lambda_term_u, 1) ~= m
-                        error_msg{end+1} = ['Parameter lambda_term_u must have dimension ', num2str(m), '.', newline];
+                        error_msg{end+1} = ['Parameter lambda_term_u must have dimension ', num2str(m), '.'];
                     end
                 end
             end
 
             if ~isempty(error_msg)
-                error(strcat(error_msg{:}));
+                error(strjoin(error_msg, newline));
             end
         end
         
-        function p = get_deepc_param_set(override_params)
+        function p = get_deepc_param_set(override_params, rmparams)
             p = {
                 ParamDescriptor("L", 1), ...
                 ParamDescriptor("Tini", 1), ...
                 ParamDescriptor("Ts", 1), ...
-                ParamDescriptor("pos_control", 0), ...
-                ParamDescriptor("n", 1), ...
                 ParamDescriptor("D_u", 0), ...
                 ParamDescriptor("D_y", 0), ...
                 ParamDescriptor("H", 0), ...
-                ParamDescriptor("end_point", 0), ...
+                ParamDescriptor("static_gain", 0), ...
                 ParamDescriptor("T", @(params) length(params.D_u)), ...
                 ParamDescriptor("R", 1), ...
                 ParamDescriptor("Q", 1), ...
-                ParamDescriptor("lambda_a", 0), ...
+                ParamDescriptor("lambda_g", 0), ...
                 ParamDescriptor("lambda_s", 0), ...
                 ParamDescriptor("lambda_s_ini", 0), ...
                 ParamDescriptor("lambda_term_u", 0), ...
                 ParamDescriptor("lambda_term_y", 0), ...
                 ParamDescriptor("Lc", @(params) params.L), ...
+                ParamDescriptor("out_gain", 1), ...
                 ParamDescriptor("terminal_constraint_size", 1), ...
                 ParamDescriptor("affine_constraint", 1), ...
                 ParamDescriptor("use_overshoot_constraints", 1), ...
@@ -603,11 +614,12 @@ classdef DeePCHelpers
                 ParamDescriptor("use_input_delta_constraints", 1), ...
                 ParamDescriptor("use_projected_regularization", 0), ...
                 ParamDescriptor("is_strict_terminal_constraint", 1), ...
+                ParamDescriptor("use_ini_filter", 0), ...
                 ParamDescriptor("use_ref_integral", 0), ...
                 ParamDescriptor("Ki", 1), ...            
+                ParamDescriptor("trend_threshold", 0), ...            
                 ParamDescriptor("input_delta", inf), ...
                 ParamDescriptor("decay", 1), ...
-                ParamDescriptor("delta_sat", 1), ...
                 ParamDescriptor("allowed_offset_terminal", 0), ...
                 ParamDescriptor("allowed_offset_slack", 0), ...
                 ParamDescriptor("u_min", -inf), ...
@@ -615,6 +627,10 @@ classdef DeePCHelpers
                 ParamDescriptor("y_min", -inf), ...
                 ParamDescriptor("y_max", inf) ...
             };
+
+            if exist('rmparams', 'var')
+                p = ParamHelpers.rmparams(p, rmparams);
+            end
 
             if exist('override_params', 'var')
                 p = ParamHelpers.override_params(p, override_params);

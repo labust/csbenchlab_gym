@@ -1,0 +1,30 @@
+{
+    "Id": "a5c8738f-8d38-4797-a21a-203fc6d46076",
+    "Name": "ATPC",
+    "Description": "",
+    "LibVersionHash": "",
+    "Lib": "data_driven_lib",
+    "LibVersion": "0.0.1",
+    "PluginType": "ctl",
+    "PluginName": "ATDeePC_wrap",
+    "IsComposable": false,
+    "RefHorizon": 10,
+    "Mux": {
+        "Inputs": [
+            1,
+            6
+        ],
+        "Outputs": [
+            1,
+            2
+        ]
+    },
+    "Subcomponents": [
+        "Disturbance",
+        "Subcontrollers"
+    ],
+    "Disturbance": {},
+    "ComponentType": "controller",
+    "PluginImplementation": "slx",
+    "Subcontrollers": {}
+}

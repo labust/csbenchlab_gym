@@ -1,0 +1,16 @@
+{
+    "Id": "832a0fb6-0823-4b09-93b7-a1f8c841e784",
+    "Name": "Sinuses",
+    "Description": "",
+    "ConstHorizonReference": false,
+    "ComponentType": "scenario",
+    "SimulationTime": 60.0,
+    "Subcomponents": [
+        "Disturbance"
+    ],
+    "Disturbance": {
+        "Id": "6582568e-6a07-4ca1-973d-ce726013b9e5",
+        "ComponentType": "disturbance",
+        "DestinationPath": "disturbances"
+    }
+}
